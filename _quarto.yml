@@ -1,0 +1,57 @@
+project:
+  type: website
+  output-dir: _site
+  # Files linked only from raw HTML or plain links, so Quarto would not copy
+  # them on its own: the Module 1 <video> embed, the slides and the starter zip.
+  resources:
+    - assets/video/*
+    - assets/slides/stanford_slides.pdf
+    - assets/stanford_starter.zip
+
+website:
+  title: "Claude Code for Empirical Research"
+  site-url: https://johnmbarrios.com/claude-code-stanford/
+  navbar:
+    background: "#002856"
+    foreground: "#FFFFFF"
+    right:
+      - text: Home
+        href: index.qmd
+      - text: Before Class
+        href: before-class.qmd
+      - text: Session
+        menu:
+          - text: Agenda
+            href: session.qmd
+          - text: "Lab 1: FSDS to a verified figure"
+            href: lab1.qmd
+          - text: "Lab 2: Skill and verification drills"
+            href: lab2.qmd
+      - text: Readings
+        href: readings.qmd
+      - text: After Class
+        href: after-class.qmd
+      - text: About
+        href: about.qmd
+  page-footer:
+    background: "#F5F7FA"
+    foreground: "#6f665e"
+    center:
+      - "John Barrios · Yale School of Management · Prepared for Stanford PhD students · "
+      - text: "Attribution & about"
+        href: about.qmd
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles/custom.scss
+    include-in-header:
+      - styles/access-gate.html
+      - styles/fonts.html
+    include-after-body: styles/site-ui.html
+    toc: true
+    toc-title: "On this page"
+    toc-depth: 3
+    code-copy: true
+    smooth-scroll: true

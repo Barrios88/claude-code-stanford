@@ -1,0 +1,191 @@
+---
+title: "Lab 2: A Skill and Three Verification Drills"
+---
+
+::: {.module-links}
+[[]{.bi .bi-file-earmark-zip aria-hidden="true"} Download the starter pack (zip)](assets/stanford_starter.zip){.btn}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Slides (PDF)](assets/slides/stanford_slides.pdf)
+[[]{.bi .bi-calendar3 aria-hidden="true"} Agenda](session.qmd)
+:::
+
+Lab 2 has two parts. In Part A (about 25 minutes, after a short demo) you turn the pipeline you built in Lab 1 into a skill: a written procedure Claude loads by itself when a request matches it, so you never have to explain the pipeline again. In Part B (25 minutes) you run three short drills that check whether your project is safe to share and whether your results survive a reader who wasn't there when you made them.
+
+You need two files from the starter pack: `SKILL_skeleton.md` for Part A and `lab2_verification_drills.md` for Part B.
+
+::: {.callout-note icon=false}
+## What you're building
+
+By the end of the lab you will have:
+
+- `.claude/skills/fsds-panel/SKILL.md` in your Lab 1 folder, tested in a fresh session on a request that doesn't name it;
+- the output of both credential-audit checks, pasted into your notes;
+- a referee report in `~/referee_room/review/` with three objections from a session that saw only your write-up;
+- one deny rule in `.claude/settings.json`, and a note of what happened when you tested it.
+:::
+
+## Demo 2: EDGAR text to data
+
+Before Part A, I show a five-minute demo of the same habits applied to text. Claude pulls the Risk Factors section (Item 1A) from a set of 10-Ks on EDGAR and counts a keyword in each one. Two details carry over to anything you build. Every downloaded filing is cached, so a rerun fetches nothing it already has. And the pipeline writes a quality report that says how many sections it extracted and gives a reason for every one it missed. A count of successes without reasons for the failures doesn't tell you whether to trust the measure.
+
+## Part A: turn your pipeline into a skill {#lab-2a}
+
+A skill is a folder holding a `SKILL.md` file. The file starts with a short header (the frontmatter) with a `name` and a `description`, followed by the steps of the procedure. Claude reads the description of every installed skill at the start of a session and loads the full steps only when a request matches it. So the description decides whether the skill ever runs.
+
+Most first skills fail in the same way: the description reads as a title. Compare:
+
+```yaml
+---
+name: fsds-panel
+description: FSDS data tool
+---
+```
+
+```yaml
+---
+name: fsds-panel
+description: Use when the user asks to build a firm-year panel or a financial
+  ratio from SEC Financial Statement Data Sets (FSDS), mentions sub.txt or
+  num.txt, or asks for a median of an XBRL tag by year or industry.
+---
+```
+
+The first says what the skill is. The second describes what a real request looks like, so Claude has something to match. Nothing else about the skill needs to change.
+
+**Build it.**
+
+1. In your Lab 1 folder, make the skill folder at project scope, so it travels with this project:
+
+   ```bash
+   cd ~/stanford_lab && mkdir -p .claude/skills/fsds-panel
+   ```
+
+2. Copy `SKILL_skeleton.md` from the starter pack to `.claude/skills/fsds-panel/SKILL.md`.
+3. In your Lab 1 session (or a new one in the same folder), ask Claude to fill in the skeleton from what you actually did: the inputs (which quarters, which tags, which aggregation), the steps in order, the filters, the paper-trail files, and the checks. Ask it to keep the steps general enough to work for a different tag.
+4. Read the result. Rewrite the `description` yourself if it reads like a title. List the phrases a real request would use.
+5. Make sure `---` is on line 1 of the file, with no comment or blank line above it. Claude reads the frontmatter only when the file starts with it. Delete any leftover comments from the skeleton.
+
+**Test it.** Testing in the session where you wrote the skill proves nothing, because that session already knows the pipeline.
+
+1. Leave Claude (type `/exit`) and start a fresh session in the same folder with `claude`.
+2. Ask for something the skill should handle without naming it, for a measure you did not build in Lab 1. For example: *"What was the median ratio of long-term debt to total assets by fiscal year in the FSDS quarters in fsds/?"*
+3. Watch the transcript. If the skill fires, Claude says it is using the `fsds-panel` skill. If instead it starts reading your Lab 1 scripts or asking how the files are laid out, the skill did not fire. Rewrite the description and test again in another fresh session.
+4. Confirm that the run follows your steps: the consolidated filter, `DATA_PROFILE.md` before any figure, and the paper trail.
+
+You can always run a skill on purpose by typing `/fsds-panel`. That doesn't test the description, so do the test above first.
+
+::: {.callout-tip icon=false}
+## Verify this: the skill
+
+- [ ] `SKILL.md` is at `.claude/skills/fsds-panel/SKILL.md`, with `---` on line 1
+- [ ] The description lists phrases a real request would use, not a title
+- [ ] In a fresh session, a request that doesn't name the skill makes it fire
+- [ ] The run follows the skill's steps, including the consolidated filter and `DATA_PROFILE.md`
+:::
+
+## Part B: three verification drills {#lab-2b}
+
+Run all three on your own project. If you have a research repository on your laptop, use it for Drill 1, because that is where an exposed key would actually hurt you. Otherwise use `~/stanford_lab`. Drill 1 needs a git repository; if your Lab 1 folder isn't one yet, run `git init` there and ask Claude to commit your scripts (not the `fsds/` data).
+
+### Drill 1: the two-check credential audit
+
+These two checks come from the full course's Module 5, adapted for public data and API keys. Run both from the root of the repository. Both should come back empty. Paste both outputs into your notes. Writing "it's clean" is not the deliverable; the pasted output is.
+
+**Check 1: has a credential file ever been committed?**
+
+```bash
+git log --all --full-history --oneline -- '*.env' '*.env.*' '.mcp.json'
+```
+
+Expected output: nothing.
+
+This looks for a `.env` file, or a variant such as `.env.local`, in any folder and at any point in the history, plus a project-level `.mcp.json`, which holds credentials if you ever registered an MCP server with project scope. If it returns even one commit, a credential file was committed at some point. Deleting the file now does not remove it from history. Anyone who clones the repo, including a coauthor, a referee running a replication package or a stranger on GitHub, can still find it in an old commit with `git show <commit>:<path>`.
+
+**Check 2: does your actual key appear anywhere?**
+
+In the full course this check searches for your WRDS password. This session uses no WRDS, so run it for each secret this project actually uses, such as an Anthropic or OpenAI API key or a GitHub token. Type `read -s SECRET`, paste the key (it won't echo), and run the two searches with `$SECRET`:
+
+```bash
+read -s SECRET
+git log --all --oneline -S"$SECRET"
+git grep -l -F --untracked -e "$SECRET"
+```
+
+Expected output: nothing.
+
+- `git log -S` lists every commit that ever added or removed the key, including in a script you have since deleted.
+- `git grep` lists files git would pick up that contain it now. It skips gitignored files.
+
+Both searches print commit IDs or file names, never the key. They look for the key itself, not the name of the variable that holds it, so a script that reads the key from the environment (the right way) passes, and a script with the key typed into it fails. Do not use a plain `grep -r "API_KEY" .` instead: it flags correct code and misses a key that was committed and later deleted.
+
+If the project uses no secrets at all, run Check 1 and write "no secrets in this project" in your notes for Check 2.
+
+::: {.callout-warning icon=false}
+## If either check finds something
+
+1. **Treat the credential as compromised right away.** Do not assume it is fine because no one saw it. Assume any credential that has ever been committed to a git repository is exposed, even in a private repo and even if you never pushed it anywhere.
+2. **Revoke and rotate first, clean up second.** Regenerate the API key (or change the password) before you touch the repository. If you clean the repo first and rotate later, the exposed credential stays valid while you work.
+3. **Remove it from history, not just the current version.** Deleting the current copy is not enough while the secret is still reachable in `git log` history. A history rewrite with `git filter-repo` or BFG removes it. If the project is small and early, starting a fresh repository is simpler.
+4. **Confirm the fix** by re-running both checks and getting a clean result before you consider the audit passed.
+:::
+
+### Drill 2: a clean-room referee
+
+A review in the same session where you did the work is weak, because the model has heard all your reasons. A referee has heard none of them. So give the review its own room: a fresh session in an empty folder that holds only what a reader of your paper would see.
+
+1. Write the reader's version of your Lab 1 result in a file called `summary.md`: the figure caption as it would appear in a paper, and one paragraph on how the sample was built (data, filters, the N at the end). You can ask Claude to draft it from your paper trail, but read it and correct it before you go on.
+2. Build the room. The folder holds only the write-up and the figure, and a deny rule stops the session from editing them:
+
+   ```bash
+   mkdir -p ~/referee_room/paper ~/referee_room/.claude
+   cp ~/stanford_lab/summary.md ~/stanford_lab/*.png ~/referee_room/paper/
+   echo '{"permissions":{"deny":["Edit(./paper/**)"]}}' > ~/referee_room/.claude/settings.json
+   cd ~/referee_room && claude
+   ```
+
+3. Send this prompt:
+
+   ```
+   You are a referee for an accounting journal. You have only the material
+   in paper/. Do not edit any file. Write the three most serious objections
+   to how this sample and figure were built to review/referee.md. For each
+   one, say what evidence would resolve it. Aim the criticism at the work,
+   not the authors.
+   ```
+
+4. Read the report. Pick one objection and answer it in writing at the bottom of `review/referee.md`: either it's right and you would change something, or it's wrong and you can say why from your paper trail.
+
+Your personal `~/.claude/CLAUDE.md`, if you have one, still loads in this room, so keep project details out of it. If the report comes back mostly praise, you have not been refereed. Ask again for the three most serious problems.
+
+### Drill 3: one deny rule, tested
+
+A line in CLAUDE.md saying "never change the raw data" is a request. Claude usually follows it, but nothing enforces it. A deny rule in `.claude/settings.json` is enforced: Claude Code refuses the matching action in every permission mode.
+
+1. In `~/stanford_lab`, create `.claude/settings.json` (or add to it if it exists) with a rule that protects the raw FSDS files:
+
+   ```json
+   {
+     "permissions": {
+       "deny": [
+         "Edit(./fsds/**)"
+       ]
+     }
+   }
+   ```
+
+2. Start a fresh session in the folder so the rule loads (`/exit`, then `claude`).
+3. Test it. Ask: *"Add the line 'test' to the end of fsds/2016q1/readme.htm."* The edit should be refused, and Claude should tell you a permission rule blocked it. Write down what it said.
+4. Note the limit. The rule covers Claude's own file-editing tools. If Claude offers to do the same thing with a shell command instead (`echo 'test' >> ...`), that command is not covered by an `Edit` rule. Decline it at the permission prompt. Permission rules are quick to write and worth having, but they are not a sandbox; only the operating system enforces a boundary that holds however the command is phrased.
+
+::: {.callout-tip icon=false}
+## Verify this: the drills
+
+- [ ] Check 1 run and its output pasted into your notes
+- [ ] Check 2 run for each secret the project uses (or "no secrets" written down), with output pasted
+- [ ] `review/referee.md` exists in `~/referee_room`, written by a session that saw only `paper/`
+- [ ] One objection answered in writing in the report file
+- [ ] Deny rule in `.claude/settings.json`, tested in a fresh session, and the refusal written down
+:::
+
+## Exit ticket
+
+At the end of class, fill in `exit_ticket.md` from the starter pack: one thing that broke today, one thing you will verify next time, one research task you will delegate to an agent, and one you won't.

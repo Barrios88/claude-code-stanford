@@ -1,0 +1,58 @@
+---
+pagetitle: "Claude Code for Empirical Research"
+toc: false
+---
+
+::: {.hero-band}
+[John Barrios · Yale School of Management · Prepared for Stanford PhD students]{.hero-kicker}
+
+# Claude Code for Empirical Research: A Hands-On Session
+
+This is a three-hour, laptops-open session for PhD students in accounting, finance and economics. You will use Claude Code, an AI agent that runs in your terminal, to take a public SEC dataset to a figure you have checked yourself, turn that work into a reusable skill, and run the checks that make agent-assisted work safe to put in a paper. Most examples are from accounting. You need no prior experience with Claude Code, and Stata users are as welcome as Python users.
+
+::: {.hero-facts}
+3 hours · 2 labs · free SEC data only · about 2 hours of prep
+:::
+
+::: {.hero-buttons}
+[Start with Before Class](before-class.qmd)
+[See the agenda →](session.qmd){.hero-link}
+:::
+:::
+
+::: {.start-path}
+[Start here]{.start-path__label}
+
+1. [Before class: install, test, download, read](before-class.qmd)
+2. [In class: the agenda and two labs](session.qmd)
+3. [After class: the full course](after-class.qmd)
+:::
+
+## The three hours
+
+::: {.agenda}
+| Time | Block | What happens |
+|---|---|---|
+| 0:00–0:20 | Framing | What an agent can do that a chat window can't, and how you stay in control of it. |
+| 0:20–0:45 | Live demo 1 | From an idea on FSDS data to a verified figure, including one planned failure and how the agent recovers. |
+| 0:45–1:35 | [Lab 1](lab1.qmd) | You build the same loop on the quarters you downloaded, at one of three tiers, and check it. |
+| 1:35–1:45 | Break | |
+| 1:45–2:15 | Demo 2 + [Lab 2a](lab2.qmd#lab-2a) | A short EDGAR text demo, then you turn your Lab 1 pipeline into a skill and test it. |
+| 2:15–2:40 | [Lab 2b](lab2.qmd#lab-2b) | Three drills on your own repo: a credential audit, a clean-room referee and a deny rule. |
+| 2:40–3:00 | Discussion + exit ticket | What this changes for research, using the [readings](readings.qmd) and what you just did. |
+:::
+
+The [Session page](session.qmd) has the full agenda with links to the slides and labs.
+
+## What you leave with
+
+By the end of the session you will have four things of your own:
+
+- a pipeline you ran and checked yourself, from a free SEC dataset to a figure with a paper trail (`DATA_PROFILE.md`, `DECISIONS.md`, `LOG.md`) and one number checked against a 10-K on EDGAR;
+- a `SKILL.md` built from that pipeline, tested in a fresh session on a request that doesn't name it;
+- a credential audit and a clean-room review, both run on your own repository;
+- a written answer to what this changes for your own research, on the exit ticket.
+
+Everything in the session uses free SEC data: the Financial Statement Data Sets (FSDS) and EDGAR filings. We do not use WRDS in class. If you want to connect Claude Code to WRDS afterward, the [After Class](after-class.qmd) page links to the full course's WRDS setup.
+
+The session is drawn from a longer six-module course, [Claude Code for Accounting Research](https://johnmbarrios.com/claude-code-accounting/). Taught by [John Barrios](about.qmd), Yale School of Management.

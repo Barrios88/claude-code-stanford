@@ -1,0 +1,29 @@
+---
+title: "About & Attribution"
+---
+
+## About this session
+
+**Claude Code for Empirical Research: A Hands-On Session** is a single three-hour session for PhD students in accounting, finance and economics, prepared for Stanford PhD students. It teaches Claude Code, an AI agent that runs in the terminal, reads and writes files, runs code and iterates, as a research assistant whose work you check. The session uses only free SEC data (the Financial Statement Data Sets and EDGAR filings) and assumes no prior experience with agentic AI tools.
+
+It is a condensed version of a longer six-module course by the same author, [Claude Code for Accounting Research](https://johnmbarrios.com/claude-code-accounting/). The [After Class](after-class.qmd) page explains how to continue there.
+
+## Instructor
+
+**John Barrios**, Yale School of Management.
+
+## Attribution
+
+**Original authorship.** The pages, labs, starter files and slides for this session are original teaching material, adapted from the author's own longer course. Where the material draws on an outside idea, technique or example, it is credited in the text.
+
+**Goldsmith-Pinkham / Markus Academy series.** Several teaching examples and prompt patterns in the longer course, and so in this session, were inspired by Paul Goldsmith-Pinkham's "Claude Code for Economists" series for the Markus Academy (Ep. 162).
+
+**Readings.** The papers on the [Readings](readings.qmd) page are cited in full with their DOIs. None of their text is reproduced here.
+
+**Video.** The Module 1 video on the [Before Class](before-class.qmd) page comes from the longer course.
+
+**No university marks.** This is a personal teaching site by a Yale faculty member. It is not an official site of Yale University, the Yale School of Management or Stanford University, and it uses none of their logos or marks.
+
+## Contact
+
+For questions about the session or its materials, contact John Barrios through his Yale School of Management faculty listing.

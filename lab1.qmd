@@ -1,0 +1,124 @@
+---
+title: "Lab 1: From FSDS to a Verified Figure"
+---
+
+::: {.module-links}
+[[]{.bi .bi-file-earmark-zip aria-hidden="true"} Download the starter pack (zip)](assets/stanford_starter.zip){.btn}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Slides (PDF)](assets/slides/stanford_slides.pdf)
+[[]{.bi .bi-calendar3 aria-hidden="true"} Agenda](session.qmd)
+:::
+
+In this lab you run the loop from the first demo yourself: raw SEC data in, a figure out, and a written record of every decision in between. You have 50 minutes. The data is already on your laptop from the [Before Class](before-class.qmd) page, so nothing in this lab depends on the room's wifi except Claude itself.
+
+You need two files from the starter pack: `lab1_opening_prompt.md`, the opening prompt with a blank for each tier, and `lab1_verify_checklist.md`, the checklist you finish with.
+
+::: {.callout-note icon=false}
+## What you're building
+
+By the end of the lab you will have, in `~/stanford_lab`:
+
+- named scripts that read the raw FSDS files and produce your measure and your figure, with nothing that exists only as a chat reply;
+- a `DATA_PROFILE.md`, written before any figure, that says what one row of each file is, tests that claim, and reports how often each tag you use appears;
+- a `DECISIONS.md` with every choice you made and why, and a `LOG.md` with every step;
+- an attrition table showing every point where the sample size changed;
+- one figure, and one number from your data checked by hand against the firm's 10-K on EDGAR.
+:::
+
+## The data
+
+You have three quarters of the SEC's Financial Statement Data Sets in `~/stanford_lab/fsds/`: `2016q1/`, `2020q1/` and `2024q1/`. FSDS groups filings by the quarter the SEC received them. Most US firms have a December year end and file their 10-K in February or March, so these three files hold mostly fiscal years 2015, 2019 and 2023. Group your results by the fiscal year column `fy` in `sub.txt`, not by the name of the folder.
+
+Two files in each folder matter:
+
+- `sub.txt` has one row per filing: the accession number (`adsh`), the firm's CIK, its SIC industry code, the form type, the fiscal year and the period the filing covers.
+- `num.txt` has one row per reported value: the accession number again, the XBRL tag (such as `Assets`), the date the value applies to (`ddate`), the number of quarters it spans (`qtrs`), the unit (`uom`), two fields called `segments` and `coreg`, and the value.
+
+You join the two on `adsh`. Then four filters apply to every tier, and the opening prompt states all of them:
+
+- **Consolidated rows only.** Keep rows where `segments` and `coreg` are blank and `uom` is `USD`. A blank `segments` field means the value is for the whole firm rather than one business segment, and a blank `coreg` means it is for the parent filer rather than a co-registrant. About half the rows in a recent `num.txt` are segment values, so skipping this filter can count the same firm's number several times.
+- **10-Ks only.** Keep `form` = `10-K`.
+- **The right `qtrs`.** Use `qtrs` = 0 for balance-sheet values (stocks, such as `Assets` or cash) and `qtrs` = 4 for full-year flows (such as R&D expense).
+- **One quarter at a time.** Each `num.txt` is 390 to 470 MB. Read one quarter, keep only the tags and columns you need, then move to the next, rather than loading all three at once.
+
+A 10-K also reports last year's numbers next to this year's, so the same firm-year value can show up in two filings. Keep values whose `ddate` matches the filing's own period end, and write that rule into `DECISIONS.md`.
+
+## Choose your tier
+
+Pick one. The tiers differ in how much cleaning judgment they ask of you. Pick the one that fits the time and your interests, not necessarily the hardest.
+
+**Base: cash holdings.** Cash and cash equivalents divided by total assets, as the median across firms for each fiscal year. The numerator tag is `CashAndCashEquivalentsAtCarryingValue` and the denominator is `Assets`, both with `qtrs` = 0. Check the cash tag's coverage in `DATA_PROFILE.md` before you compute anything.
+
+What to expect, from the class files (share of 10-Ks with a consolidated value for the filing's own period end):
+
+| Tag | 2016q1 | 2020q1 | 2024q1 |
+|---|---|---|---|
+| `Assets` | 98.4% | 98.7% | 99.4% |
+| `CashAndCashEquivalentsAtCarryingValue` | 91.3% | 85.1% | 80.5% |
+| `CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents` | 0% | 57.5% | 79.3% |
+
+The main cash tag loses coverage after the 2018 restricted-cash standard, as filers move to the tag that includes restricted cash. The median cash-to-assets ratio is about 7 to 9 percent, and part of the rise in the last year comes from which firms drop out of the main tag. Report the median both ways: main tag only, and with the restricted-cash tag as a fallback. Financial firms are more than a quarter of filers, so also say whether you keep them.
+
+Some firms report cash under a different tag, for example one that includes restricted cash. If the coverage of the main tag is low in any of your three years, decide whether to use a second tag as a fallback, and write down which one and why.
+
+**Standard: R&D intensity by industry.** R&D expense divided by total assets: `ResearchAndDevelopmentExpense` with `qtrs` = 4 over `Assets` with `qtrs` = 0. Report the median by two-digit SIC code (`sic2`, the first two digits of `sic` in `sub.txt`) for the five largest `sic2` groups, by fiscal year. You decide what "largest" means (most firms reporting R&D is the simplest choice) and record it in `DECISIONS.md`.
+
+What to expect: `ResearchAndDevelopmentExpense` appears in 26 to 33 percent of 10-Ks in these files. By that count the five largest groups are SIC 28 (chemicals and pharmaceuticals), 73 (business services, including software), 38 (instruments), 36 (electronics) and 35 (machinery and computers). SIC 28's median is far above the rest, above 20 percent of assets, because it holds hundreds of small biotechs.
+
+Check at least one large firm against its 10-K. A tag name can mislead: in Johnson & Johnson's fiscal 2023 filing, `ResearchAndDevelopmentExpense` is $483 million, a charge for buying in-process R&D, while its income-statement R&D of about $15.1 billion sits under `ResearchAndDevelopmentExpenseExcludingAcquiredInProcessCost`.
+
+One warning. Firms with no R&D mostly don't report the tag at all, so in this data zero R&D shows up as a missing tag, not as a zero. If you drop missing values, your median describes only firms that report R&D. If you fill them with zero, you assume every non-reporter does no R&D. Neither choice is wrong, but they give different answers, so make one on purpose and say which in `DECISIONS.md`.
+
+**Stretch: your own question.** Use the research question you brought. It has to be answerable, at least in part, from these three quarters of FSDS. Find the tags you need first and check their coverage in `DATA_PROFILE.md` before you build anything, because a tag that appears in 5 percent of 10-Ks will not support a figure. The stretch tier uses the same opening prompt structure, the same paper trail and the same verify checklist as the other two.
+
+## Run it
+
+Work in this order. The order is the point of the lab: each step catches a different kind of mistake before it reaches the figure.
+
+1. **Start Claude in your data folder.**
+
+   ```bash
+   cd ~/stanford_lab && claude
+   ```
+
+2. **Fill in the opening prompt.** Open `lab1_opening_prompt.md`. It has six parts: DATA, JOIN, MEASURE, AGGREGATION, OUTPUT and PAPER TRAIL. Fill in the blanks for your tier in MEASURE and AGGREGATION, and change OUTPUT if you want a different figure. Leave the PAPER TRAIL part exactly as written, even if you're short on time, because it is what produces `DATA_PROFILE.md`, `DECISIONS.md` and `LOG.md`. Paste the prompt and send it.
+
+3. **Read `DATA_PROFILE.md` as soon as it exists**, before any measure is computed. Check the row counts, the uniqueness test (the number of rows should equal the number of distinct keys) and the tag coverage for each quarter. If anything looks wrong, stop and ask about it now. Press Esc if Claude is already moving on.
+
+4. **Look at the raw data.** Ask for a plot of the firm-level ratio for each year, before any medians. Extreme values and impossible ratios (cash above total assets, say) are much easier to see here than in a median.
+
+5. **Make the figure.** Let Claude draw it, then refine it in no more than three rounds.
+
+6. **Check one number against the 10-K.** Pick one firm in your sample with a December year end. These are first-quarter files, so firms with other year ends (Apple's ends in September) mostly appear only through their 10-Qs. Find its 10-K for one of your fiscal years on [EDGAR](https://www.sec.gov/edgar/search/), open the balance sheet (or the income statement, for R&D), and compare the value with the raw value in your data, before any division. Write the firm, the filing, the two numbers and whether they match into `DECISIONS.md`.
+
+7. **Work through the checklist** below.
+
+::: {.callout-warning icon=false}
+## Common failure: a clean-looking figure
+
+A figure with tidy axes and a sensible trend looks finished. That says nothing about whether the join, the filters or the tag choice were right. A missing consolidated-row filter, for example, can inflate values and still produce a smooth line. The checklist is what tells you whether the figure is right. Do it even when the figure looks fine.
+:::
+
+::: {.callout-tip icon=false}
+## Verify this: the Lab 1 checklist
+
+The same list is in `lab1_verify_checklist.md`. It is pass/fail and you grade yourself.
+
+- [ ] `sub.txt` and `num.txt` joined on `adsh`, with row counts reported before and after the join
+- [ ] Consolidated filter applied (`segments` and `coreg` blank, `uom` = `USD`), with row counts before and after
+- [ ] Only `form` = `10-K`, and `qtrs` = 0 for stocks and `qtrs` = 4 for flows
+- [ ] `DATA_PROFILE.md` written before the first figure: what one row is, a uniqueness test with both counts, tag coverage by quarter, and the rule for prior-year values and amendments
+- [ ] Attrition table present, and every change in sample size explained in `DECISIONS.md`
+- [ ] Raw firm-level values plotted before aggregating
+- [ ] One number checked against the firm's actual 10-K on EDGAR, and the result written down
+- [ ] Figure produced by a named script, and the whole pipeline reruns from the scripts alone
+:::
+
+## If you finish early
+
+Pick one:
+
+- Do the next tier up, in the same folder, and compare what changed in your decisions.
+- Ask Claude to write a README that would let a classmate rerun your pipeline from an empty folder, then try it in a fresh copy of the folder.
+- Commit your work to git (`git init`, then ask Claude to commit at each step with a message that says why). Lab 2's credential audit runs on a git repository, so this saves you a step later.
+
+Keep this folder. Lab 2 turns this pipeline into a skill.

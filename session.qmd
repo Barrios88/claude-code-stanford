@@ -1,0 +1,63 @@
+---
+title: "The Session"
+---
+
+::: {.module-links}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Slides (PDF)](assets/slides/stanford_slides.pdf){.btn}
+[[]{.bi .bi-tools aria-hidden="true"} Lab 1](lab1.qmd)
+[[]{.bi .bi-tools aria-hidden="true"} Lab 2](lab2.qmd)
+[[]{.bi .bi-file-earmark-zip aria-hidden="true"} Starter pack (zip)](assets/stanford_starter.zip)
+:::
+
+The session runs three hours with one ten-minute break. About half of it is your own work at the keyboard. Bring your laptop charged, with everything on the [Before Class](before-class.qmd) page done, and the data already in `~/stanford_lab/fsds/`.
+
+## Agenda
+
+::: {.agenda}
+| Time | Block | What happens | Where |
+|---|---|---|---|
+| 0:00–0:20 | Framing | What an agent does that a chat window doesn't: it reads, writes and runs files, and it iterates on what it sees. The ladder of AI tools. How you stay in control: CLAUDE.md, permission prompts, plan mode and the Esc key. | Slides |
+| 0:20–0:45 | Live demo 1 | An idea on FSDS data taken to a verified figure, with the six-part opening prompt and the paper trail it produces. One planned failure and its recovery, and one number checked against a 10-K. | Slides |
+| 0:45–1:35 | Lab 1 (50 min) | You build the same loop on your three downloaded quarters at one of three tiers, then work through the verify checklist. | [Lab 1](lab1.qmd) |
+| 1:35–1:45 | Break | | |
+| 1:45–2:15 | Demo 2 + Lab 2a | A five-minute EDGAR demo that turns 10-K text into data. Then you turn your Lab 1 pipeline into a skill and test that it fires in a fresh session. | [Lab 2, Part A](lab2.qmd#lab-2a) |
+| 2:15–2:40 | Lab 2b | Three verification drills on your own repo: the two-check credential audit, a clean-room referee and one tested deny rule. | [Lab 2, Part B](lab2.qmd#lab-2b) |
+| 2:40–3:00 | Discussion + exit ticket | What this changes in the market for research, drawing on the two readings and on what you just did. Then a short written exit ticket. | [Readings](readings.qmd) |
+:::
+
+## Block by block
+
+### Framing (20 minutes)
+
+A chat window answers questions. An agent like Claude Code works in a folder on your machine: it reads your files, writes scripts, runs them, looks at the output and tries again. That makes it far more useful for empirical work and also means you need ways to stay in control. We cover four: a `CLAUDE.md` file that holds the project's standing instructions, the permission prompts that ask before Claude edits a file or runs a command, plan mode (Shift+Tab) for agreeing on a plan before anything runs, and Esc to stop it mid-step. The thread through the rest of the session is verification: every number the agent reports gets checked against something it did not produce.
+
+### Live demo 1 (25 minutes)
+
+I take one research idea on FSDS data from an empty folder to a finished figure. Watch three things. The opening prompt has six parts (DATA, JOIN, MEASURE, AGGREGATION, OUTPUT, PAPER TRAIL), and you will reuse it in Lab 1. The paper trail gets written as the work happens: `DATA_PROFILE.md` before any figure, `DECISIONS.md` for every choice, and `LOG.md` for every step. And at least one thing goes wrong on purpose, such as a download refused with "403 Forbidden" for a missing User-Agent or duplicate rows that would double-count a firm, so you can see how the agent recovers and where I step in. The demo ends by checking one number against the actual 10-K on EDGAR.
+
+### Lab 1 (50 minutes)
+
+You run the same loop yourself on the quarters you downloaded. Pick a tier (cash holdings, R&D intensity, or your own question), adapt `lab1_opening_prompt.md`, and finish with `lab1_verify_checklist.md`. Full instructions are on the [Lab 1 page](lab1.qmd).
+
+### Demo 2 and Lab 2a (30 minutes)
+
+A short demo shows the same habits on text: pulling the Risk Factors section (Item 1A) from a set of 10-Ks, counting a keyword, caching every download so a rerun fetches nothing twice, and writing a quality report that says which filings failed and why. Then you package your Lab 1 pipeline as a skill, `.claude/skills/fsds-panel/SKILL.md`, starting from `SKILL_skeleton.md`, and test that it fires in a fresh session on a request that doesn't name it. Instructions are in [Lab 2, Part A](lab2.qmd#lab-2a).
+
+### Lab 2b: verification drills (25 minutes)
+
+Three short drills from `lab2_verification_drills.md`, all on your own project: the two-check credential audit, a clean-room referee that sees only your figure caption or paper-trail summary, and one deny rule in `.claude/settings.json` that you test. Instructions are in [Lab 2, Part B](lab2.qmd#lab-2b).
+
+### Discussion and exit ticket (20 minutes)
+
+We discuss three questions, one each on learning, on verification and on the market for papers, using the two readings and your own experience from the labs. The discussion questions for each paper are on the [Readings page](readings.qmd).
+
+The exit ticket (`exit_ticket.md` in the starter pack) asks for four short answers:
+
+- one thing that broke today, and how it got fixed;
+- one thing you will verify next time before you trust a result;
+- one research task you will delegate to an agent;
+- one research task you won't.
+
+## Slides
+
+The [slides (PDF)](assets/slides/stanford_slides.pdf) follow the agenda above, with a section for each block. They include the lab instructions, the verify checklist, the skill steps and the drill steps, so you can keep them open next to your terminal during the labs.

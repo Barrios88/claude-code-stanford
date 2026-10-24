@@ -1,0 +1,169 @@
+---
+title: "Before Class"
+---
+
+::: {.module-links}
+[[]{.bi .bi-file-earmark-zip aria-hidden="true"} Download the starter pack (zip)](assets/stanford_starter.zip){.btn}
+[[]{.bi .bi-play-btn aria-hidden="true"} Video (12 min)](#module-video)
+[[]{.bi .bi-book aria-hidden="true"} Readings](readings.qmd)
+:::
+
+The session is three hours, and almost all of it is hands-on. That only works if every laptop in the room already runs Claude Code and already has the data on it. Plan on about two hours of preparation in total. Everything on this page is due **48 hours before class** unless it says otherwise. Do items 1 to 3 early, ideally a week ahead, so there is time to fix a problem if one comes up.
+
+Each item ends with a "How you know it's done" check. Tick the box once the check passes. The boxes are saved in this browser only, as a convenience for you; nobody else sees them.
+
+## The checklist
+
+- [ ] **1. Install and sign in** to Claude Code, Python 3.10+ with pandas and matplotlib, and git; create a GitHub account. *48 hours before class.*
+- [ ] **2. Run the smoke test** from the starter pack and keep `setup_check.txt`. *48 hours before class.* If it fails and you can't fix it, email me no later than 48 hours before class.
+- [ ] **3. Download the data:** three FSDS quarters, unzipped into `fsds/`. *48 hours before class.*
+- [ ] **4. Watch** the Module 1 video (about 12 minutes). *48 hours before class.*
+- [ ] **5. Read two papers** (about 40 minutes). *48 hours before class.*
+- [ ] **6. Write down a research question** in one sentence. *48 hours before class.*
+- [ ] **7. Optional:** set up WRDS access for after the session. *No deadline.*
+
+The sections below explain each item.
+
+## 1. Install and sign in
+
+You need four things on the laptop you will bring.
+
+- **Claude Code** on a Claude Pro or Max subscription, or with an Anthropic API key. A free Claude.ai account does not work with Claude Code. Install it with the native installer (macOS, Linux and WSL):
+
+  ```bash
+  curl -fsSL https://claude.ai/install.sh | bash
+  ```
+
+  Then run `claude` in any folder and follow the login steps. Homebrew (`brew install --cask claude-code`) also works. Anthropic's [setup guide](https://code.claude.com/docs/en/setup) has the current commands for every platform.
+- **Python 3.10 or later** with pandas and matplotlib: `pip3 install pandas matplotlib`. If you work mainly in Stata, install Python anyway. The labs use Python, and Claude writes the code.
+- **git**, which comes with macOS (run `git --version`; if it is missing, macOS offers to install it) and installs on Ubuntu with `sudo apt install git`.
+- **A GitHub account**, free at [github.com](https://github.com).
+
+**Windows users:** Claude Code runs inside WSL2, a Linux system that Windows provides, not in PowerShell. Open PowerShell as administrator, run `wsl --install`, reboot, and then do everything on this page inside the Ubuntu window. Keep your project folders under your Linux home folder (`cd ~`), not under `C:\Users`.
+
+The full course's [General Setup page](https://johnmbarrios.com/claude-code-accounting/setup.html) walks through each step in more detail, with fixes for the common failures. It asks for the course access code, `Barrios_AI2026`. Ignore its WRDS steps for now.
+
+**How you know it's done:** in a terminal, all four of these print a version or `ok`:
+
+```bash
+claude --version
+python3 --version
+python3 -c "import pandas, matplotlib; print('ok')"
+git --version
+```
+
+and you can sign in to GitHub in a browser.
+
+## 2. Run the smoke test
+
+The smoke test checks that Claude Code can do real work on your machine: read and write files, run Python, and fetch a public SEC filing.
+
+1. Download the [starter pack](assets/stanford_starter.zip) and unzip it. It unzips to a folder called `stanford_starter/`. Its `README.md` says what each file is for.
+2. Make a new, empty folder and start Claude Code in it:
+
+   ```bash
+   mkdir ~/setup_check && cd ~/setup_check && claude
+   ```
+
+3. Open `setup_check_prompt.md` from the starter pack, copy the whole prompt, paste it into Claude Code and press Enter. Approve the permission prompts as they come up, reading each one before you say yes.
+
+Claude writes a file called `setup_check.txt`. It records the versions of your tools, one number taken from a filing (Apple's total assets in its 10-K for the fiscal year ended September 27, 2025) and the date.
+
+**How you know it's done:** `setup_check.txt` exists in `~/setup_check`, it lists a version for each tool, and it gives Apple's total assets with a link to the 10-K it came from. Open that link yourself, find total assets on the balance sheet, and confirm the number matches. That last step is the habit the whole session is built on: the agent reports a number, and you check it against the source.
+
+If the smoke test fails and you can't fix it, email me at the address in the pre-class email no later than 48 hours before class. Include the error message and what you tried. A failed install is easy to fix by email two days ahead and very hard to fix in the room.
+
+## 3. Download the data
+
+Lab 1 uses three quarters of the SEC's [Financial Statement Data Sets](https://www.sec.gov/data-research/sec-markets-data/financial-statement-data-sets) (FSDS): 2016q1, 2020q1 and 2024q1. FSDS groups filings by the quarter the SEC received them, and most firms file their 10-K in February or March, so these files hold mostly fiscal years 2015, 2019 and 2023. Download them now so the room's wifi can't hold up the lab.
+
+| File | Size (zipped) |
+|---|---|
+| `2016q1.zip` | 95.5 MB |
+| `2020q1.zip` | 96.6 MB |
+| `2024q1.zip` | 124.3 MB |
+| **Total** | **316.4 MB** |
+
+<!-- Sizes from HEAD requests to sec.gov (Content-Length 95,470,843 / 96,584,608 / 124,336,804 bytes). -->
+
+Unzipped, the three quarters take about 1.6 GB, most of it in the three `num.txt` files (410 to 490 MB each). Leave at least 3 GB free.
+
+<!-- Unzipped sizes from unzip -l on the downloaded zips: 516.5 / 517.4 / 597.0 MB. -->
+
+The SEC refuses downloads that don't say who is asking, and returns "403 Forbidden". You identify yourself with a User-Agent of the form "Name email". Make the folder you will use for Lab 1 and download into it. Put your own name and email in the first line:
+
+```bash
+export SEC_UA="Jane Doe jdoe@stanford.edu"
+mkdir -p ~/stanford_lab && cd ~/stanford_lab
+bash ~/Downloads/stanford_starter/download_fsds.sh
+```
+
+Change the last path if you unzipped the starter pack somewhere else. The script downloads each quarter, unzips it into `fsds/2016q1/`, `fsds/2020q1/` and `fsds/2024q1/`, and deletes the zip. It skips any quarter that is already there, so it is safe to rerun.
+
+If you prefer to run the download by hand, this does the same thing:
+
+```bash
+export SEC_UA="Jane Doe jdoe@stanford.edu"
+mkdir -p ~/stanford_lab/fsds && cd ~/stanford_lab
+for q in 2016q1 2020q1 2024q1; do
+  curl -fL -A "$SEC_UA" -o "fsds/$q.zip" \
+    "https://www.sec.gov/files/dera/data/financial-statement-data-sets/$q.zip"
+  unzip -oq "fsds/$q.zip" -d "fsds/$q" && rm "fsds/$q.zip"
+  sleep 1
+done
+```
+
+**How you know it's done:** from `~/stanford_lab`, `ls fsds/*/` shows three folders, each holding `sub.txt`, `num.txt`, `pre.txt`, `tag.txt` and `readme.htm`, and `ls -lh fsds/*/num.txt` shows three files of roughly 390M to 470M each.
+
+## 4. Watch the Module 1 video {#watch}
+
+This 12-minute video comes from the first module of the longer course this session is drawn from. It covers what an agent does that a chat window doesn't, the ladder of AI tools, and how CLAUDE.md, permission prompts and plan mode keep you in control. It mentions WRDS and later modules of that course; you can skip past those parts. We will build on the rest in the first twenty minutes of class.
+
+```{=html}
+<div class="module-video" id="module-video">
+  <p class="module-video__label" id="module-video-label">
+    <span class="bi bi-play-circle" aria-hidden="true"></span>
+    Watch: Module 1 walkthrough (12 min, narrated slides)
+  </p>
+  <div class="module-video__frame">
+    <video controls preload="metadata" playsinline
+           poster="assets/video/module1_poster.jpg"
+           aria-labelledby="module-video-label">
+      <source src="assets/video/module1_foundations.mp4" type="video/mp4">
+      <track kind="captions" src="assets/video/module1_foundations.en.vtt"
+             srclang="en" label="English" default>
+      <p>Your browser cannot play this video.
+        <a href="assets/video/module1_foundations.mp4">Download the MP4</a> instead.</p>
+    </video>
+  </div>
+  <p class="module-video__meta">
+    <a href="assets/video/module1_foundations.mp4" download>
+      <span class="bi bi-download" aria-hidden="true"></span> Download video (MP4, 25 MB)</a>
+    <span aria-hidden="true">·</span>
+    <a href="assets/video/module1_foundations.en.vtt" download>Captions (WebVTT)</a>
+  </p>
+</div>
+```
+
+**How you know it's done:** you can say in a sentence or two what a permission prompt is for and what plan mode does.
+
+## 5. Read two papers
+
+Read these two papers, about 40 minutes in total. The [Readings page](readings.qmd) has the full citations, which parts to read, and the discussion questions we will use at the end of class.
+
+- Brodeur et al. (2026), *PNAS*: a randomized study of human-only, AI-assisted and AI-led teams reproducing published social-science results.
+- Kusumegi et al. (2025), *Science*: what happened to scientific output after researchers started writing with large language models. A free version is on arXiv.
+
+Hao, Xu, Li and Evans (2026), *Nature*, is an optional third paper.
+
+**How you know it's done:** for each paper you can state its main finding in one sentence, and you have read the two discussion questions for it on the Readings page.
+
+## 6. Bring a research question
+
+Write down one sentence: a question from your own research that a public SEC dataset (FSDS or EDGAR filings) could at least partly answer. It does not need to be a full paper idea. "How did goodwill impairments change after 2020?" is enough. You will use it in the stretch tier of Lab 1 and in the discussion.
+
+**How you know it's done:** the sentence is written somewhere you can copy and paste from during class.
+
+## 7. Optional: WRDS, for later
+
+We don't use WRDS in this session, and you don't need an account. If you want Claude Code to query WRDS for your own research afterward, the full course's [WRDS MCP Setup page](https://johnmbarrios.com/claude-code-accounting/setup-wrds.html) walks through it (access code `Barrios_AI2026`). It takes an hour or more, and WRDS account problems take days to fix, so leave it until after the session.

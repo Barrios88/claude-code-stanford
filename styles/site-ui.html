@@ -1,0 +1,142 @@
+<script>
+/* Lab checklists: remember ticked boxes per page in this browser only
+   (convenience, not a record), and add a small progress line + reset. */
+(function () {
+  function init() {
+    var lists = document.querySelectorAll("main ul.task-list");
+    if (!lists.length) return;
+    var key = "ccstan_checklist:" + location.pathname;
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch (e) {}
+
+    lists.forEach(function (ul, li) {
+      var boxes = ul.querySelectorAll('input[type="checkbox"]');
+      var status = document.createElement("p");
+      status.className = "checklist-status";
+      status.setAttribute("aria-live", "polite");
+
+      function refresh() {
+        var n = 0;
+        boxes.forEach(function (b) {
+          var item = b.closest("li");
+          if (item) item.classList.toggle("is-checked", b.checked);
+          if (b.checked) n++;
+        });
+        status.firstChild.nodeValue = n + " of " + boxes.length + " checked ";
+      }
+
+      status.appendChild(document.createTextNode(""));
+      var reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "checklist-reset";
+      reset.textContent = "Clear";
+      status.appendChild(reset);
+
+      boxes.forEach(function (b, bi) {
+        var id = li + ":" + bi;
+        if (saved[id]) b.checked = true;
+        b.addEventListener("change", function () {
+          saved[id] = b.checked;
+          try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+          refresh();
+        });
+      });
+      reset.addEventListener("click", function () {
+        boxes.forEach(function (b, bi) { b.checked = false; saved[li + ":" + bi] = false; });
+        try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+        refresh();
+      });
+
+      ul.parentNode.insertBefore(status, ul.nextSibling);
+      refresh();
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script>
+/* Session video: show captions in a strip under the player instead of on
+   top of the slide, where they collided with slide text and with the
+   controls after a seek. Full screen falls back to the browser's own
+   captions. The player's CC button still turns captions on and off. */
+(function () {
+  function setup(v) {
+    var frame = v.closest(".module-video__frame");
+    var track = null;
+    for (var i = 0; i < v.textTracks.length; i++) {
+      var t = v.textTracks[i];
+      if (t.kind === "captions" || t.kind === "subtitles") { track = t; break; }
+    }
+    if (!frame || !track) return;
+
+    var strip = document.createElement("div");
+    strip.className = "module-video__captions";
+    frame.insertAdjacentElement("afterend", strip);
+
+    var wantOn = track.mode !== "disabled";
+    var internal = false;
+
+    function isFull() {
+      return document.fullscreenElement === v ||
+             document.webkitFullscreenElement === v ||
+             v.webkitDisplayingFullscreen === true;
+    }
+    function setMode(m) {
+      if (track.mode === m) return;
+      internal = true;
+      track.mode = m;
+      setTimeout(function () { internal = false; }, 0);
+    }
+    function render() {
+      strip.hidden = !wantOn || isFull();
+      strip.textContent = "";
+      if (strip.hidden || !track.activeCues) return;
+      for (var i = 0; i < track.activeCues.length; i++) {
+        var line = document.createElement("span");
+        line.className = "module-video__caption-line";
+        line.appendChild(track.activeCues[i].getCueAsHTML());
+        strip.appendChild(line);
+      }
+    }
+    function sync() {
+      if (isFull()) setMode(wantOn ? "showing" : "disabled");
+      else setMode(wantOn ? "hidden" : "disabled");
+      render();
+    }
+
+    v.textTracks.addEventListener("change", function () {
+      if (internal) return;
+      if (isFull()) {
+        wantOn = track.mode === "showing";
+      } else if (track.mode === "showing") {
+        // The CC button only ever turns the track to "showing"; treat it as a toggle.
+        wantOn = !wantOn;
+      } else if (track.mode === "disabled") {
+        wantOn = false;
+      }
+      sync();
+    });
+    track.addEventListener("cuechange", render);
+    ["seeked", "loadedmetadata"].forEach(function (e) { v.addEventListener(e, render); });
+    ["fullscreenchange", "webkitfullscreenchange"].forEach(function (e) {
+      document.addEventListener(e, sync);
+    });
+    ["webkitbeginfullscreen", "webkitendfullscreen"].forEach(function (e) {
+      v.addEventListener(e, function () { setTimeout(sync, 0); });
+    });
+    sync();
+  }
+  function init() {
+    document.querySelectorAll(".module-video video").forEach(setup);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>

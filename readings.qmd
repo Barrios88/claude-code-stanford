@@ -1,0 +1,60 @@
+---
+title: "Readings"
+---
+
+Read the two required papers before class, about 40 minutes in total. The discussion in the last twenty minutes of the session draws on them and on what you did in the labs. Each paper has two discussion questions below. Come with a short answer to at least one question per paper.
+
+## Required
+
+### Brodeur et al. (2026): AI and reproducibility
+
+Brodeur, Abel, et al. (2026). "AI-Assisted Teams Outperform AI-Led Teams but Not Human-Only Teams in Assessing Research Reproducibility in Quantitative Social Science." *Proceedings of the National Academy of Sciences* 123(22): e2524747123. [doi:10.1073/pnas.2524747123](https://doi.org/10.1073/pnas.2524747123).
+
+**What to read:** the introduction and the results.
+
+**What it finds.** The authors randomly assigned 288 researchers to 103 teams, which tried to reproduce published social-science results. Some teams worked without AI, some worked with AI assistance, and in some the AI led the work with little human oversight. Human-only teams reproduced 94 percent of results and AI-assisted teams 91 percent, but the human-only teams found significantly more of the major coding errors. AI assistance gave no measurable advantage over working without it. Teams where the AI led reproduced 37 percent.
+
+**Discussion questions.**
+
+1. In Drill 2 a fresh Claude session reviewed your work. In this study, teams with AI help caught fewer of the major errors than teams without it. What would an AI review need to look like for it to add to your own checking, and how would you know whether it did?
+2. AI-led teams reproduced 37 percent of results. Think back to Lab 1: at which steps would the result have gone wrong if you had not been reading along, and which steps could you have left to the agent with little oversight?
+
+### Kusumegi et al. (2025): AI and scientific output
+
+Kusumegi, Keigo, Xinyu Yang, Paul Ginsparg, Mathijs de Vaan, Toby E. Stuart, and Yian Yin (2025). "Scientific Production in the Era of Large Language Models." *Science* 390(6779): 1240–1243. [doi:10.1126/science.adw3000](https://doi.org/10.1126/science.adw3000). Free author version at [arXiv 2601.13187](https://arxiv.org/abs/2601.13187).
+
+**What to read:** the whole paper. It is four pages.
+
+**What it finds.** The authors track 2.1 million preprints. Authors who adopt LLMs post between 24 and 89 percent more papers, depending on field and background. The usual link between complex writing and paper quality reverses, so polished prose stops being a sign of a good paper. Adopters also read and cite more widely, including younger and less-cited work.
+
+**Discussion questions.**
+
+1. If polished writing no longer tells a referee much about a paper's quality, what will editors and referees look at instead? What does that mean for how you document and present your own work?
+2. Suppose every PhD student in your field could do what you did today. If output per researcher rises by the amounts this paper reports, what happens to the review queue at the top journals, and to what a publication signals on the job market?
+
+## Optional
+
+### Hao, Xu, Li and Evans (2026): AI methods and the focus of science
+
+Hao, Qianyue, Fengli Xu, Yong Li, and James A. Evans (2026). "Artificial Intelligence Tools Expand Scientists' Impact but Contract Science's Focus." *Nature* 649: 1237–1243. [doi:10.1038/s41586-025-09922-y](https://doi.org/10.1038/s41586-025-09922-y). Free author version at [arXiv 2412.07727](https://arxiv.org/abs/2412.07727).
+
+**What to read:** the whole paper, if you have time.
+
+**What it finds.** This paper is about a different kind of AI use from the other two. It studies research that applies AI *methods*, mostly machine learning and deep learning, across about 41 million natural-science papers since 1980. Scientists whose work uses AI methods publish about three times as many papers, receive almost five times as many citations, and become project leaders earlier. Over the same period, the range of topics studied narrows by about 5 percent and scientists engage with each other's work about a fifth less. The study is observational, and the authors say so: scientists who adopt AI methods differ from those who don't in other ways too, so the comparison does not show that AI causes these gains.
+
+**Discussion questions.**
+
+1. The individual gains and the narrowing of topics point in different directions: what pays one researcher may cost the field. Do tools like the one you used today push you toward questions that public data answers easily? What would push back?
+2. Because the study is observational, what alternative explanations would you want ruled out before believing that using AI methods causes higher output and citations? What data or design could rule them out?
+
+## The three questions in class
+
+The discussion at the end of the session takes one question from each of three areas. You don't need to prepare for these separately; the paper questions above feed into them.
+
+- **Learning.** A paper is an artifact; your understanding of the work is capital that only doing the work builds. Today you produced artifacts faster than usual. What happened to your understanding along the way?
+- **Verification.** Two identical results, one hand-coded by a research assistant and one produced by an agent with a full paper trail. Should a referee treat them the same?
+- **The market for papers.** When the cost of producing a paper falls, the value moves to whatever stays scarce. In your own research, what is that?
+
+## Going further
+
+The full course's Module 6 seminar uses three more readings on the same questions: a field experiment on learning with and without AI, a study of expert deskilling, and a system that writes machine-learning papers end to end. It also lists accounting-specific options. They are listed on its [Module 6 page](https://johnmbarrios.com/claude-code-accounting/modules/06-ai-knowledge-market.html) (access code `Barrios_AI2026`).

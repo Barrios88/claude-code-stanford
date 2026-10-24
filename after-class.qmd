@@ -1,0 +1,45 @@
+---
+title: "After Class"
+---
+
+Three hours covers the core loop: build, check, package and audit. If you want to take this further in your own research, this session is drawn from a longer course, **Claude Code for Accounting Research**, which goes deeper on each step and adds WRDS. It is open to any PhD student as self-study, at your own pace, and you are welcome to share it with others in your program.
+
+::: {.callout-note icon=false}
+## The full course
+
+**Site:** <https://johnmbarrios.com/claude-code-accounting/>
+
+**Access code:** `Barrios_AI2026`
+
+Enter the code once per browser session. Modules 1 to 5 each have a video, notes, slides, a lab and a starter pack; Module 6 is a discussion seminar.
+:::
+
+## Where to go next
+
+Each module below picks up where a block of today's session stopped.
+
+| If you want to... | Go to |
+|---|---|
+| Run the Lab 1 loop at full length: fourteen years of FSDS, a reproducibility README and a rerun from a fresh folder | [Module 2: The Empirical Loop](https://johnmbarrios.com/claude-code-accounting/modules/02-empirical-loop.html) |
+| Build the EDGAR text pipeline from Demo 2 yourself, write a validity protocol for a text measure, and build a paper-reading skill | [Module 3: EDGAR Text to Data, and Skills](https://johnmbarrios.com/claude-code-accounting/modules/03-edgar-text.html) |
+| Let Claude query WRDS (Compustat, CRSP and more) through an MCP server on your own account, and hand results to Stata | [Module 4: WRDS MCP at Scale](https://johnmbarrios.com/claude-code-accounting/modules/04-wrds-mcp-scale.html) |
+| Go further on today's drills: hooks that block a commit, sandboxes, response-letter audits and checking `DECISIONS.md` against the commit history | [Module 5: Writing, Safety and Verification](https://johnmbarrios.com/claude-code-accounting/modules/05-writing-verify.html) |
+
+## WRDS
+
+We did not use WRDS today. To connect Claude Code to your own WRDS account, follow the full course's [WRDS MCP Setup page](https://johnmbarrios.com/claude-code-accounting/setup-wrds.html). It takes an hour or more, and you need a WRDS account with Duo two-factor login already working, so start early if your account is new. Module 4 then uses the connection. WRDS data is licensed to you and your institution, so keep it out of public repositories and out of anything you share.
+
+## Skills and prompts
+
+- The [Skills catalog](https://johnmbarrios.com/claude-code-accounting/skills/index.html) has 40 ready-made skills for accounting research, covering econometrics, data work, writing and review. Each one has a download and an install command. Read a couple of them next to your own `fsds-panel` skill and compare the descriptions.
+- The [Prompts page](https://johnmbarrios.com/claude-code-accounting/prompts.html) collects the reusable prompts from the full course, including the full fourteen-year version of the six-part opening prompt, the front-loaded EDGAR prompt and the editor prompt for feedback on your writing.
+
+## Keep the habits
+
+Whatever you use next, the habits from today are the part that carries over:
+
+- Ask for `DATA_PROFILE.md`, `DECISIONS.md` and `LOG.md` in the first prompt, before any analysis runs.
+- Check at least one number against a source the agent did not touch.
+- Test a skill in a fresh session before you trust it.
+- Run the two-check credential audit before you push a repository anywhere.
+- Put rules that must always hold in `.claude/settings.json`, not only in CLAUDE.md.
