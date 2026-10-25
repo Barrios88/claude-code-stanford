@@ -13,15 +13,17 @@ In this lab you run the loop from the first demo yourself: raw SEC data in, a fi
 You need two files from the starter pack: `lab1_opening_prompt.md`, the opening prompt with a blank for each tier, and `lab1_verify_checklist.md`, the checklist you finish with.
 
 ::: {.callout-note icon=false}
-## What you're building
+## What you will have at the end
 
-By the end of the lab you will have, in `~/stanford_lab`:
+When the lab is done, your `~/stanford_lab` folder should contain:
 
-- named scripts that read the raw FSDS files and produce your measure and your figure, with nothing that exists only as a chat reply;
-- a `DATA_PROFILE.md`, written before any figure, that says what one row of each file is, tests that claim, and reports how often each tag you use appears;
-- a `DECISIONS.md` with every choice you made and why, and a `LOG.md` with every step;
-- an attrition table showing every point where the sample size changed;
-- one figure, and one number from your data checked by hand against the firm's 10-K on EDGAR.
+- Scripts that go from the raw FSDS files to your figure. Everything the agent did should be in a file you can rerun.
+- `DATA_PROFILE.md`, written before you make any figure. It says what one row of each file is, checks that this is true, and shows how often each tag you use appears.
+- `DECISIONS.md`, listing each choice you made and why.
+- `LOG.md`, listing each step.
+- A table showing how many observations are left after each filter.
+- One figure.
+- One number from your data that you checked against the firm's 10-K on EDGAR.
 :::
 
 ## The data

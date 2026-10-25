@@ -13,14 +13,14 @@ Lab 2 has two parts. In Part A (about 25 minutes, after a short demo) you turn t
 You need two files from the starter pack: `SKILL_skeleton.md` for Part A and `lab2_verification_drills.md` for Part B.
 
 ::: {.callout-note icon=false}
-## What you're building
+## What you will have at the end
 
-By the end of the lab you will have:
+When the lab is done, you should have:
 
-- `.claude/skills/fsds-panel/SKILL.md` in your Lab 1 folder, tested in a fresh session on a request that doesn't name it;
-- the output of both credential-audit checks, pasted into your notes;
-- a referee report in `~/referee_room/review/` with three objections from a session that saw only your write-up;
-- one deny rule in `.claude/settings.json`, and a note of what happened when you tested it.
+- A skill file, `.claude/skills/fsds-panel/SKILL.md`, in your Lab 1 folder. You tested it in a new session with a request that does not mention the skill by name.
+- The output of both credential-audit checks, saved in your notes.
+- A referee report in `~/referee_room/review/` with three objections. It comes from a session that saw only your write-up.
+- One deny rule in `.claude/settings.json`, and a note on what happened when you tested it.
 :::
 
 ## Demo 2: EDGAR text to data
