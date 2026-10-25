@@ -1,29 +1,15 @@
 ---
-title: "About & Attribution"
+title: "About John Barrios"
 ---
 
-## About this session
+John Barrios is an Associate Professor of Accounting at the [Yale School of Management](https://som.yale.edu/) and a Faculty Research Fellow at the [National Bureau of Economic Research](https://www.nber.org/), in the Political Economy and the Productivity, Innovation, and Entrepreneurship groups.
 
-**Claude Code for Empirical Research: A Hands-On Session** is a single three-hour session for PhD students in accounting, finance and economics, prepared for Stanford PhD students. It teaches Claude Code, an AI agent that runs in the terminal, reads and writes files, runs code and iterates, as a research assistant whose work you check. The session uses only free SEC data (the Financial Statement Data Sets and EDGAR filings) and assumes no prior experience with agentic AI tools.
+His research looks at how accounting information and the rules that govern it shape firms and the people who run them. He studies who enters the accounting profession, who starts a business, how politics affects the way people read and act on the numbers, and how disclosure regulation interacts with antitrust enforcement. His work has been published in the *Journal of Accounting Research*, the *Journal of Public Economics*, *American Economic Journal: Microeconomics*, *Management Science* and the *Journal of Financial Economics*.
 
-It is a condensed version of a longer six-module course by the same author, [Claude Code for Accounting Research](https://johnmbarrios.com/claude-code-accounting/). The [After Class](after-class.qmd) page explains how to continue there.
+He is Editor of *Accounting Horizons*, an Ad Hoc Advising Editor at the *Journal of Accounting and Economics*, and Guest Editor of the *Journal of Labor Economics* Symposium on Occupational Licensing. He co-founded the Labor and Accounting Group.
 
-## Instructor
+He also works on how researchers can use AI agents without giving up verification or ownership of their results. He teaches a PhD course on Claude Code for accounting research, of which this session is a short version, and maintains an open-source set of agent skills for empirical research, including a WRDS connector.
 
-**John Barrios**, Yale School of Management.
+Before Yale, he taught at the University of Chicago Booth School of Business and at the Olin Business School at Washington University in St. Louis. He holds a PhD in Business Administration and an MPA in Accounting from the University of Miami, and a BS in Industrial and Labor Relations from Cornell University.
 
-## Attribution
-
-**Original authorship.** The pages, labs, starter files and slides for this session are original teaching material, adapted from the author's own longer course. Where the material draws on an outside idea, technique or example, it is credited in the text.
-
-**Goldsmith-Pinkham / Markus Academy series.** Several teaching examples and prompt patterns in the longer course, and so in this session, were inspired by Paul Goldsmith-Pinkham's "Claude Code for Economists" series for the Markus Academy (Ep. 162).
-
-**Readings.** The papers on the [Readings](readings.qmd) page are cited in full with their DOIs. None of their text is reproduced here.
-
-**Video.** The Module 1 video on the [Before Class](before-class.qmd) page comes from the longer course.
-
-**No university marks.** This is a personal teaching site by a Yale faculty member. It is not an official site of Yale University, the Yale School of Management or Stanford University, and it uses none of their logos or marks.
-
-## Contact
-
-For questions about the session or its materials, contact John Barrios through his Yale School of Management faculty listing.
+[Personal website](https://johnmbarrios.com/) · [AI and research](https://johnmbarrios.com/ai-research.html) · [Google Scholar](https://scholar.google.com/citations?user=yE9KwEgAAAAJ)

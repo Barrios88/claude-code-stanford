@@ -39,7 +39,7 @@ website:
     foreground: "#6f665e"
     center:
       - "John Barrios · Yale School of Management · Prepared for Stanford PhD students · "
-      - text: "Attribution & about"
+      - text: "About"
         href: about.qmd
 
 format:
