@@ -8,7 +8,11 @@ toc: false
 
 # Claude Code for Empirical Research: A Hands-On Session
 
-This is a three-hour, laptops-open session for PhD students in accounting, finance and economics. You will use Claude Code, an AI agent that runs in your terminal, to take a public SEC dataset to a figure you have checked yourself, turn that work into a reusable skill, and run the checks that make agent-assisted work safe to put in a paper. Most examples are from accounting. You need no prior experience with Claude Code, and Stata users are as welcome as Python users.
+I built this session for PhD students who do empirical work, in any field. My examples come mostly from accounting and finance because that is where I work, but the workflow carries over to any project that turns raw data into a result. You need no experience with Claude Code, and Stata users are as welcome as Python users.
+
+Claude Code is an AI agent that runs in your terminal. A chat window hands you code to paste somewhere else; Claude Code reads your files, writes and runs the code itself, looks at what came back, and tries again. That changes what a PhD student can get done in a week. Cleaning a new dataset, merging files, rebuilding every table after the sample changes: the plumbing that eats months of a dissertation goes much faster. The catch is that mistakes also arrive faster, and they look finished. So we spend as much time checking the work as producing it.
+
+Over three hours, laptops open, you will take a public SEC dataset to a figure you have checked yourself, turn that work into a skill Claude can reuse on your next project, and run the checks I use before anything an agent built goes into a paper.
 
 ::: {.hero-facts}
 Tuesday, November 3, 2026 · 12:00–3:00 pm · Room E247
