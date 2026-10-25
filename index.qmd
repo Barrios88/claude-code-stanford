@@ -11,6 +11,8 @@ toc: false
 This is a three-hour, laptops-open session for PhD students in accounting, finance and economics. You will use Claude Code, an AI agent that runs in your terminal, to take a public SEC dataset to a figure you have checked yourself, turn that work into a reusable skill, and run the checks that make agent-assisted work safe to put in a paper. Most examples are from accounting. You need no prior experience with Claude Code, and Stata users are as welcome as Python users.
 
 ::: {.hero-facts}
+Tuesday, November 3, 2026 · 12:00–3:00 pm · Room E247
+
 3 hours · 2 labs · free SEC data only · about 2 hours of prep
 :::
 
@@ -31,11 +33,11 @@ This is a three-hour, laptops-open session for PhD students in accounting, finan
 ## The three hours
 
 ::: {.agenda}
-| Time | Block | What happens |
+| Time (pm) | Block | What happens |
 |---|---|---|
-| 0:00–0:20 | Framing | What an agent can do that a chat window can't, and how you stay in control of it. |
-| 0:20–0:45 | Live demo 1 | From an idea on FSDS data to a verified figure, including one planned failure and how the agent recovers. |
-| 0:45–1:35 | [Lab 1](lab1.qmd) | You build the same loop on the quarters you downloaded, at one of three tiers, and check it. |
+| 12:00–12:20 | Framing | What an agent can do that a chat window can't, and how you stay in control of it. |
+| 12:20–12:45 | Live demo 1 | From an idea on FSDS data to a verified figure, including one planned failure and how the agent recovers. |
+| 12:45–1:35 | [Lab 1](lab1.qmd) | You build the same loop on the quarters you downloaded, at one of three tiers, and check it. |
 | 1:35–1:45 | Break | |
 | 1:45–2:15 | Demo 2 + [Lab 2a](lab2.qmd#lab-2a) | A short EDGAR text demo, then you turn your Lab 1 pipeline into a skill and test it. |
 | 2:15–2:40 | [Lab 2b](lab2.qmd#lab-2b) | Three drills on your own repo: a credential audit, a clean-room referee and a deny rule. |

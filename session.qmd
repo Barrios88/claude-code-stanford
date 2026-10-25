@@ -9,16 +9,16 @@ title: "The Session"
 [[]{.bi .bi-file-earmark-zip aria-hidden="true"} Starter pack (zip)](assets/stanford_starter.zip)
 :::
 
-The session runs three hours with one ten-minute break. About half of it is your own work at the keyboard. Bring your laptop charged, with everything on the [Before Class](before-class.qmd) page done, and the data already in `~/stanford_lab/fsds/`.
+The session is on **Tuesday, November 3, 2026, from 12:00 to 3:00 pm in Room E247**. It runs three hours with one ten-minute break. About half of it is your own work at the keyboard. Bring your laptop charged, with everything on the [Before Class](before-class.qmd) page done, and the data already in `~/stanford_lab/fsds/`.
 
 ## Agenda
 
 ::: {.agenda}
-| Time | Block | What happens | Where |
+| Time (pm) | Block | What happens | Where |
 |---|---|---|---|
-| 0:00–0:20 | Framing | What an agent does that a chat window doesn't: it reads, writes and runs files, and it iterates on what it sees. The ladder of AI tools. How you stay in control: CLAUDE.md, permission prompts, plan mode and the Esc key. | Slides |
-| 0:20–0:45 | Live demo 1 | An idea on FSDS data taken to a verified figure, with the six-part opening prompt and the paper trail it produces. One planned failure and its recovery, and one number checked against a 10-K. | Slides |
-| 0:45–1:35 | Lab 1 (50 min) | You build the same loop on your three downloaded quarters at one of three tiers, then work through the verify checklist. | [Lab 1](lab1.qmd) |
+| 12:00–12:20 | Framing | What an agent does that a chat window doesn't: it reads, writes and runs files, and it iterates on what it sees. The ladder of AI tools. How you stay in control: CLAUDE.md, permission prompts, plan mode and the Esc key. | Slides |
+| 12:20–12:45 | Live demo 1 | An idea on FSDS data taken to a verified figure, with the six-part opening prompt and the paper trail it produces. One planned failure and its recovery, and one number checked against a 10-K. | Slides |
+| 12:45–1:35 | Lab 1 (50 min) | You build the same loop on your three downloaded quarters at one of three tiers, then work through the verify checklist. | [Lab 1](lab1.qmd) |
 | 1:35–1:45 | Break | | |
 | 1:45–2:15 | Demo 2 + Lab 2a | A five-minute EDGAR demo that turns 10-K text into data. Then you turn your Lab 1 pipeline into a skill and test that it fires in a fresh session. | [Lab 2, Part A](lab2.qmd#lab-2a) |
 | 2:15–2:40 | Lab 2b | Three verification drills on your own repo: the two-check credential audit, a clean-room referee and one tested deny rule. | [Lab 2, Part B](lab2.qmd#lab-2b) |
