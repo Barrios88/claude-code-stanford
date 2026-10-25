@@ -2,11 +2,12 @@ project:
   type: website
   output-dir: _site
   # Files linked only from raw HTML or plain links, so Quarto would not copy
-  # them on its own: the Module 1 <video> embed, the slides and the starter zip.
+  # them on its own: the Module 1 <video> embed, the slides, the starter zip and the reading PDFs.
   resources:
     - assets/video/*
     - assets/slides/stanford_slides.pdf
     - assets/stanford_starter.zip
+    - assets/readings/*
 
 website:
   title: "Claude Code for Empirical Research"

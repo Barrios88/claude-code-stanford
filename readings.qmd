@@ -10,6 +10,8 @@ Read the two required papers before class, about 40 minutes in total. The discus
 
 Brodeur, Abel, et al. (2026). "AI-Assisted Teams Outperform AI-Led Teams but Not Human-Only Teams in Assessing Research Reproducibility in Quantitative Social Science." *Proceedings of the National Academy of Sciences* 123(22): e2524747123. [doi:10.1073/pnas.2524747123](https://doi.org/10.1073/pnas.2524747123).
 
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Read the PDF](assets/readings/brodeur_2026_pnas.pdf){.btn} (published version, 11 pages, 1 MB; open access under CC BY-NC-ND 4.0, reposted unchanged)
+
 **What to read:** the introduction and the results.
 
 **What it finds.** The authors randomly assigned 288 researchers to 103 teams, which tried to reproduce published social-science results. Some teams worked without AI, some worked with AI assistance, and in some the AI led the work with little human oversight. Human-only teams reproduced 94 percent of results and AI-assisted teams 91 percent, but the human-only teams found significantly more of the major coding errors. AI assistance gave no measurable advantage over working without it. Teams where the AI led reproduced 37 percent.
@@ -22,6 +24,8 @@ Brodeur, Abel, et al. (2026). "AI-Assisted Teams Outperform AI-Led Teams but Not
 ### Kusumegi et al. (2025): AI and scientific output
 
 Kusumegi, Keigo, Xinyu Yang, Paul Ginsparg, Mathijs de Vaan, Toby E. Stuart, and Yian Yin (2025). "Scientific Production in the Era of Large Language Models." *Science* 390(6779): 1240–1243. [doi:10.1126/science.adw3000](https://doi.org/10.1126/science.adw3000). Free author version at [arXiv 2601.13187](https://arxiv.org/abs/2601.13187).
+
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Read the PDF](https://arxiv.org/pdf/2601.13187){.btn} (free arXiv version; the *Science* version is behind a paywall, so we link to arXiv rather than repost it)
 
 **What to read:** the whole paper. It is four pages.
 

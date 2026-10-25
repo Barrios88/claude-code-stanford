@@ -151,8 +151,8 @@ This 12-minute video comes from the first module of the longer course this sessi
 
 Read these two papers, about 40 minutes in total. The [Readings page](readings.qmd) has the full citations, which parts to read, and the discussion questions we will use at the end of class.
 
-- Brodeur et al. (2026), *PNAS*: a randomized study of human-only, AI-assisted and AI-led teams reproducing published social-science results.
-- Kusumegi et al. (2025), *Science*: what happened to scientific output after researchers started writing with large language models. A free version is on arXiv.
+- Brodeur et al. (2026), *PNAS*: a randomized study of human-only, AI-assisted and AI-led teams reproducing published social-science results. [PDF](assets/readings/brodeur_2026_pnas.pdf)
+- Kusumegi et al. (2025), *Science*: what happened to scientific output after researchers started writing with large language models. [Free PDF on arXiv](https://arxiv.org/pdf/2601.13187)
 
 Hao, Xu, Li and Evans (2026), *Nature*, is an optional third paper.
 
