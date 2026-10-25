@@ -48,16 +48,16 @@ Hao, Qianyue, Fengli Xu, Yong Li, and James A. Evans (2026). "Artificial Intelli
 
 **Discussion questions.**
 
-1. The individual gains and the narrowing of topics point in different directions: what pays one researcher may cost the field. Do tools like the one you used today push you toward questions that public data answers easily? What would push back?
+1. The gains go to individual researchers, while the narrowing of topics affects the whole field. Do tools like the one you used today push you toward questions that public data answers easily? What would push back?
 2. Because the study is observational, what alternative explanations would you want ruled out before believing that using AI methods causes higher output and citations? What data or design could rule them out?
 
 ## The three questions in class
 
 The discussion at the end of the session takes one question from each of three areas. You don't need to prepare for these separately; the paper questions above feed into them.
 
-- **Learning.** A paper is an artifact; your understanding of the work is capital that only doing the work builds. Today you produced artifacts faster than usual. What happened to your understanding along the way?
+- **Learning.** You produced results faster than usual today. Do you understand them as well as you would if you had built them by hand?
 - **Verification.** Two identical results, one hand-coded by a research assistant and one produced by an agent with a full paper trail. Should a referee treat them the same?
-- **The market for papers.** When the cost of producing a paper falls, the value moves to whatever stays scarce. In your own research, what is that?
+- **The market for papers.** If producing a paper gets cheaper, which parts of your research stay hard to do? Those parts become more valuable.
 
 ## Going further
 

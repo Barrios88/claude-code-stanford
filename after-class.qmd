@@ -2,7 +2,7 @@
 title: "After Class"
 ---
 
-Three hours covers the core loop: build, check, package and audit. If you want to take this further in your own research, this session is drawn from a longer course, **Claude Code for Accounting Research**, which goes deeper on each step and adds WRDS. It is open to any PhD student as self-study, at your own pace, and you are welcome to share it with others in your program.
+The session covered building a pipeline, checking it, turning it into a skill and auditing your repository. If you want to go further, this session is drawn from a longer course, **Claude Code for Accounting Research**, which goes deeper on each step and adds WRDS. It is open to any PhD student as self-study, at your own pace, and you are welcome to share it with others in your program.
 
 ::: {.callout-note icon=false}
 ## The full course
@@ -16,7 +16,7 @@ Enter the code once per browser session. Modules 1 to 5 each have a video, notes
 
 ## Where to go next
 
-Each module below picks up where a block of today's session stopped.
+Each module below goes further on one part of today's session.
 
 | If you want to... | Go to |
 |---|---|
@@ -34,9 +34,9 @@ We did not use WRDS today. To connect Claude Code to your own WRDS account, foll
 - The [Skills catalog](https://johnmbarrios.com/claude-code-accounting/skills/index.html) has 40 ready-made skills for accounting research, covering econometrics, data work, writing and review. Each one has a download and an install command. Read a couple of them next to your own `fsds-panel` skill and compare the descriptions.
 - The [Prompts page](https://johnmbarrios.com/claude-code-accounting/prompts.html) collects the reusable prompts from the full course, including the full fourteen-year version of the six-part opening prompt, the front-loaded EDGAR prompt and the editor prompt for feedback on your writing.
 
-## Keep the habits
+## What to keep doing
 
-Whatever you use next, the habits from today are the part that carries over:
+Whatever tool you use next, keep doing these:
 
 - Ask for `DATA_PROFILE.md`, `DECISIONS.md` and `LOG.md` in the first prompt, before any analysis runs.
 - Check at least one number against a source the agent did not touch.

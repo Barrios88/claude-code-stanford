@@ -8,13 +8,13 @@ title: "Before Class"
 [[]{.bi .bi-book aria-hidden="true"} Readings](readings.qmd)
 :::
 
-The session is on **Tuesday, November 3, 2026, 12:00–3:00 pm, in Room E247**. It is three hours, and almost all of it is hands-on. That only works if every laptop in the room already runs Claude Code and already has the data on it. Plan on about two hours of preparation in total. Everything on this page is due **by noon on Sunday, November 1** (48 hours before class) unless it says otherwise. Do items 1 to 3 early, ideally this week, so there is time to fix a problem if one comes up.
+The session is on **Tuesday, November 3, 2026, 12:00–3:00 pm, in Room E247**. It is three hours, and almost all of it is hands-on. That only works if every laptop in the room already runs Claude Code and already has the data on it. Plan on about two hours of preparation in total. Everything on this page is due **by noon on Sunday, November 1**, unless it says otherwise. Do items 1 to 3 early, ideally this week, so there is time to fix a problem if one comes up.
 
-Each item ends with a "How you know it's done" check. Tick the box once the check passes. The boxes are saved in this browser only, as a convenience for you; nobody else sees them.
+Each item ends with a "How you know it's done" check. Tick the box once the check passes. The ticks are saved in your browser only. Nobody else sees them.
 
 ## The checklist
 
-- [ ] **1. Install and sign in** to Claude Code, Python 3.10+ with pandas and matplotlib, and git; create a GitHub account. *By noon Sunday, Nov 1.*
+- [ ] **1. Install and sign in** to Claude Code. Install Python 3.9+ with pandas and matplotlib, and git. Create a GitHub account. *By noon Sunday, Nov 1.*
 - [ ] **2. Run the smoke test** from the starter pack and keep `setup_check.txt`. *By noon Sunday, Nov 1.* If it fails and you can't fix it, email me by noon Sunday, Nov 1.
 - [ ] **3. Download the data:** three FSDS quarters, unzipped into `fsds/`. *By noon Sunday, Nov 1.*
 - [ ] **4. Watch** the Module 1 video (about 12 minutes). *By noon Sunday, Nov 1.*
@@ -35,8 +35,10 @@ You need four things on the laptop you will bring.
   ```
 
   Then run `claude` in any folder and follow the login steps. Homebrew (`brew install --cask claude-code`) also works. Anthropic's [setup guide](https://code.claude.com/docs/en/setup) has the current commands for every platform.
-- **Python 3.10 or later** with pandas and matplotlib: `pip3 install pandas matplotlib`. If you work mainly in Stata, install Python anyway. The labs use Python, and Claude writes the code.
-- **git**, which comes with macOS (run `git --version`; if it is missing, macOS offers to install it) and installs on Ubuntu with `sudo apt install git`.
+- **Python 3.9 or later** with pandas and matplotlib. If you work mainly in Stata, install Python anyway. The labs use Python, and Claude writes the code.
+  - Mac: `python3 -m pip install --user pandas matplotlib`. If pip refuses with "externally-managed-environment", add `--break-system-packages` to the end.
+  - Windows (inside Ubuntu/WSL): `sudo apt update && sudo apt install -y python3-pandas python3-matplotlib unzip`
+- **git**, which comes with macOS (run `git --version`; if it is missing, macOS offers to install it) and is already installed in Ubuntu/WSL.
 - **A GitHub account**, free at [github.com](https://github.com).
 
 **Windows users:** Claude Code runs inside WSL2, a Linux system that Windows provides, not in PowerShell. Open PowerShell as administrator, run `wsl --install`, reboot, and then do everything on this page inside the Ubuntu window. Keep your project folders under your Linux home folder (`cd ~`), not under `C:\Users`.
@@ -58,18 +60,20 @@ and you can sign in to GitHub in a browser.
 
 The smoke test checks that Claude Code can do real work on your machine: read and write files, run Python, and fetch a public SEC filing.
 
-1. Download the [starter pack](assets/stanford_starter.zip) and unzip it. It unzips to a folder called `stanford_starter/`. Its `README.md` says what each file is for.
+1. Download the [starter pack](assets/stanford_starter.zip) and unzip it in your home folder, so the files end up in `~/stanford_starter/`. Its `README.md` says what each file is for.
+   - Mac: move `stanford_starter.zip` from Downloads to your home folder and double-click it, or run `cd ~ && unzip ~/Downloads/stanford_starter.zip`.
+   - Windows (inside Ubuntu/WSL): `cd ~ && unzip /mnt/c/Users/<your Windows user name>/Downloads/stanford_starter.zip`
 2. Make a new, empty folder and start Claude Code in it:
 
    ```bash
-   mkdir ~/setup_check && cd ~/setup_check && claude
+   mkdir -p ~/setup_check && cd ~/setup_check && claude
    ```
 
-3. Open `setup_check_prompt.md` from the starter pack, copy the whole prompt, paste it into Claude Code and press Enter. Approve the permission prompts as they come up, reading each one before you say yes.
+3. Open `~/stanford_starter/setup_check_prompt.md`. Copy only the text inside the prompt block, replace `<TODO: Your Name your.email@stanford.edu>` with your real name and email, then paste it into Claude Code and press Enter. Approve the permission prompts as they come up, reading each one before you say yes.
 
 Claude writes a file called `setup_check.txt`. It records the versions of your tools, one number taken from a filing (Apple's total assets in its 10-K for the fiscal year ended September 27, 2025) and the date.
 
-**How you know it's done:** `setup_check.txt` exists in `~/setup_check`, it lists a version for each tool, and it gives Apple's total assets with a link to the 10-K it came from. Open that link yourself, find total assets on the balance sheet, and confirm the number matches. That last step is the habit the whole session is built on: the agent reports a number, and you check it against the source.
+**How you know it's done:** `setup_check.txt` exists in `~/setup_check`, it lists a version for each tool, and it gives Apple's total assets with a link to the 10-K it came from. Open that link yourself, find total assets on the balance sheet, and confirm the number matches. We check every number the agent reports against the source, all session.
 
 If the smoke test fails and you can't fix it, email me at the address in the pre-class email no later than noon on Sunday, November 1. Include the error message and what you tried. A failed install is easy to fix by email two days ahead and very hard to fix in the room.
 
@@ -86,25 +90,28 @@ Lab 1 uses three quarters of the SEC's [Financial Statement Data Sets](https://w
 
 <!-- Sizes from HEAD requests to sec.gov (Content-Length 95,470,843 / 96,584,608 / 124,336,804 bytes). -->
 
-Unzipped, the three quarters take about 1.6 GB, most of it in the three `num.txt` files (410 to 490 MB each). Leave at least 3 GB free.
+Unzipped, the three quarters take about 1.6 GB, most of it in the three `num.txt` files. Leave at least 3 GB free.
 
 <!-- Unzipped sizes from unzip -l on the downloaded zips: 516.5 / 517.4 / 597.0 MB. -->
 
-The SEC refuses downloads that don't say who is asking, and returns "403 Forbidden". You identify yourself with a User-Agent of the form "Name email". Make the folder you will use for Lab 1 and download into it. Put your own name and email in the first line:
+The SEC refuses downloads that don't say who is asking, and returns "403 Forbidden". You identify yourself with a User-Agent of the form "Name email". Make the folder you will use for Lab 1, make it a git repository that ignores the raw data, and download into it. Put your own name and email in the first line:
 
 ```bash
 export SEC_UA="Jane Doe jdoe@stanford.edu"
 mkdir -p ~/stanford_lab && cd ~/stanford_lab
-bash ~/Downloads/stanford_starter/download_fsds.sh
+git init
+echo "fsds/" > .gitignore
+bash ~/stanford_starter/download_fsds.sh
 ```
 
-Change the last path if you unzipped the starter pack somewhere else. The script downloads each quarter, unzips it into `fsds/2016q1/`, `fsds/2020q1/` and `fsds/2024q1/`, and deletes the zip. It skips any quarter that is already there, so it is safe to rerun.
+The `.gitignore` line keeps 1.6 GB of raw data out of git. The script downloads each quarter, unzips it into `fsds/2016q1/`, `fsds/2020q1/` and `fsds/2024q1/`, and deletes the zip. It skips any quarter that is already there, so it is safe to rerun.
 
 If you prefer to run the download by hand, this does the same thing:
 
 ```bash
 export SEC_UA="Jane Doe jdoe@stanford.edu"
 mkdir -p ~/stanford_lab/fsds && cd ~/stanford_lab
+git init && echo "fsds/" > .gitignore
 for q in 2016q1 2020q1 2024q1; do
   curl -fL -A "$SEC_UA" -o "fsds/$q.zip" \
     "https://www.sec.gov/files/dera/data/financial-statement-data-sets/$q.zip"
@@ -113,7 +120,7 @@ for q in 2016q1 2020q1 2024q1; do
 done
 ```
 
-**How you know it's done:** from `~/stanford_lab`, `ls fsds/*/` shows three folders, each holding `sub.txt`, `num.txt`, `pre.txt`, `tag.txt` and `readme.htm`, and `ls -lh fsds/*/num.txt` shows three files of roughly 390M to 470M each.
+**How you know it's done:** from `~/stanford_lab`, `ls fsds/*/` shows three folders, each holding `sub.txt`, `num.txt`, `pre.txt`, `tag.txt` and `readme.htm`, and `ls -lh fsds/*/num.txt` shows three files of roughly 390M to 470M each, and `git status` does not list `fsds/`.
 
 ## 4. Watch the Module 1 video {#watch}
 

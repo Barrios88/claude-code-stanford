@@ -29,7 +29,7 @@ The session is on **Tuesday, November 3, 2026, from 12:00 to 3:00 pm in Room E24
 
 ### Framing (20 minutes)
 
-A chat window answers questions. An agent like Claude Code works in a folder on your machine: it reads your files, writes scripts, runs them, looks at the output and tries again. That makes it far more useful for empirical work and also means you need ways to stay in control. We cover four: a `CLAUDE.md` file that holds the project's standing instructions, the permission prompts that ask before Claude edits a file or runs a command, plan mode (Shift+Tab) for agreeing on a plan before anything runs, and Esc to stop it mid-step. The thread through the rest of the session is verification: every number the agent reports gets checked against something it did not produce.
+A chat window answers questions. An agent like Claude Code works in a folder on your machine: it reads your files, writes scripts, runs them, looks at the output and tries again. That makes it more useful for empirical work, and it means you need ways to control it. We cover four: a `CLAUDE.md` file that holds the project's standing instructions, the permission prompts that ask before Claude edits a file or runs a command, plan mode (Shift+Tab) for agreeing on a plan before anything runs, and Esc to stop it mid-step. For the rest of the session, we check every number the agent reports against a source it did not produce.
 
 ### Live demo 1 (25 minutes)
 
@@ -41,7 +41,7 @@ You run the same loop yourself on the quarters you downloaded. Pick a tier (cash
 
 ### Demo 2 and Lab 2a (30 minutes)
 
-A short demo shows the same habits on text: pulling the Risk Factors section (Item 1A) from a set of 10-Ks, counting a keyword, caching every download so a rerun fetches nothing twice, and writing a quality report that says which filings failed and why. Then you package your Lab 1 pipeline as a skill, `.claude/skills/fsds-panel/SKILL.md`, starting from `SKILL_skeleton.md`, and test that it fires in a fresh session on a request that doesn't name it. Instructions are in [Lab 2, Part A](lab2.qmd#lab-2a).
+A short demo applies the same steps to text: pulling the Risk Factors section (Item 1A) from a set of 10-Ks, counting a keyword, caching every download so a rerun fetches nothing twice, and writing a quality report that says which filings failed and why. Then you package your Lab 1 pipeline as a skill, `.claude/skills/fsds-panel/SKILL.md`, starting from `SKILL_skeleton.md`, and test that it fires in a fresh session on a request that doesn't name it. Instructions are in [Lab 2, Part A](lab2.qmd#lab-2a).
 
 ### Lab 2b: verification drills (25 minutes)
 
@@ -53,7 +53,7 @@ We discuss three questions, one each on learning, on verification and on the mar
 
 The exit ticket (`exit_ticket.md` in the starter pack) asks for four short answers:
 
-- one thing that broke today, and how it got fixed;
+- one thing that broke today, and how you found out;
 - one thing you will verify next time before you trust a result;
 - one research task you will delegate to an agent;
 - one research task you won't.
