@@ -4,7 +4,7 @@ title: "Lab 2: A Skill and Three Verification Drills"
 
 ::: {.module-links}
 [[]{.bi .bi-file-earmark-zip aria-hidden="true"} Download the starter pack (zip)](assets/stanford_starter.zip){.btn}
-[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Slides (PDF)](assets/slides/stanford_slides.pdf)
+[[]{.bi .bi-easel aria-hidden="true"} Slides](assets/slides/html/index.html)
 [[]{.bi .bi-calendar3 aria-hidden="true"} Agenda](session.qmd)
 :::
 

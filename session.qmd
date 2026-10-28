@@ -3,7 +3,8 @@ title: "The Session"
 ---
 
 ::: {.module-links}
-[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Slides (PDF)](assets/slides/stanford_slides.pdf){.btn}
+[[]{.bi .bi-easel aria-hidden="true"} Slides](assets/slides/html/index.html){.btn}
+[[]{.bi .bi-file-earmark-pdf aria-hidden="true"} Slides (PDF)](assets/slides/stanford_slides.pdf)
 [[]{.bi .bi-tools aria-hidden="true"} Lab 1](lab1.qmd)
 [[]{.bi .bi-tools aria-hidden="true"} Lab 2](lab2.qmd)
 [[]{.bi .bi-file-earmark-zip aria-hidden="true"} Starter pack (zip)](assets/stanford_starter.zip)
@@ -60,4 +61,4 @@ The exit ticket (`exit_ticket.md` in the starter pack) asks for four short answe
 
 ## Slides
 
-The [slides (PDF)](assets/slides/stanford_slides.pdf) follow the agenda above, with a section for each block. They include the lab instructions, the verify checklist, the skill steps and the drill steps, so you can keep them open next to your terminal during the labs.
+The [slides](assets/slides/html/index.html) follow the agenda above, with a section for each block. They include the lab instructions, the verify checklist, the skill steps and the drill steps, so you can keep them open next to your terminal during the labs. They open in your browser: use the arrow keys to move, O for an overview of all slides. A [PDF copy](assets/slides/stanford_slides.pdf) is there if you prefer one.
