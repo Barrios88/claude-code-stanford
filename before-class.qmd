@@ -38,20 +38,26 @@ You need four things on the laptop you will bring.
 - **Python 3.9 or later** with pandas and matplotlib. If you work mainly in Stata, install Python anyway. The labs use Python, and Claude writes the code.
   - Mac: `python3 -m pip install --user pandas matplotlib`. If pip refuses with "externally-managed-environment", add `--break-system-packages` to the end.
   - Windows (inside Ubuntu/WSL): `sudo apt update && sudo apt install -y python3-pandas python3-matplotlib unzip`
-- **git**, which comes with macOS (run `git --version`; if it is missing, macOS offers to install it) and is already installed in Ubuntu/WSL.
+- **git**, which comes with macOS (run `git --version`; if it is missing, macOS offers to install it) and is already installed in Ubuntu/WSL. Tell git who you are, or your first commit in class fails with "Author identity unknown". Run these once, with your own name and email:
+
+  ```bash
+  git config --global user.name "Jane Doe"
+  git config --global user.email jdoe@stanford.edu
+  ```
 - **A GitHub account**, free at [github.com](https://github.com).
 
 **Windows users:** Claude Code runs inside WSL2, a Linux system that Windows provides, not in PowerShell. Open PowerShell as administrator, run `wsl --install`, reboot, and then do everything on this page inside the Ubuntu window. Keep your project folders under your Linux home folder (`cd ~`), not under `C:\Users`.
 
 The full course's [General Setup page](https://johnmbarrios.com/claude-code-accounting/setup.html) walks through each step in more detail, with fixes for the common failures. It asks for the course access code, `Barrios_AI2026`. Ignore its WRDS steps for now.
 
-**How you know it's done:** in a terminal, all four of these print a version or `ok`:
+**How you know it's done:** in a terminal, each of these prints a version, `ok` or your email:
 
 ```bash
 claude --version
 python3 --version
 python3 -c "import pandas, matplotlib; print('ok')"
 git --version
+git config --global user.email
 ```
 
 and you can sign in to GitHub in a browser.
