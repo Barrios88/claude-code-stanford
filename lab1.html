@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 1: From FSDS to a Verified Figure – Claude Code for Empirical Research</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-8eac5589bfce7e5f66782cfe7e5efc72.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-aed0888da02e542b20c5c8cc03827edf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+  html.access-locked body > *:not(#course-access-gate) { visibility: hidden !important; }
+  #course-access-gate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: #f5f7fa;
+  }
+  html.access-locked #course-access-gate { display: flex; }
+  #course-access-gate .gate-card {
+    width: min(26rem, 100%);
+    background: #fff;
+    border: 1px solid #d8dee6;
+    border-radius: 4px;
+    padding: 2.25rem 2rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  #course-access-gate .gate-kicker {
+    margin: 0 0 0.75rem;
+    color: #6f665e;
+    font-family: "Public Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  #course-access-gate h1 {
+    margin: 0 0 0.75rem;
+    color: #002856;
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 0;
+    padding: 0;
+  }
+  #course-access-gate p {
+    margin: 0 0 1.25rem;
+    color: #6f665e;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  #course-access-gate form {
+    display: grid;
+    gap: 0.75rem;
+  }
+  #course-access-gate label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  #course-access-gate input[type="password"] {
+    width: 100%;
+    border: 1px solid #b9c2ce;
+    border-radius: 4px;
+    padding: 0.7rem 0.8rem;
+    font-size: 1rem;
+    color: #212529;
+  }
+  #course-access-gate input[type="password"]:focus {
+    outline: 2px solid #002856;
+    outline-offset: 1px;
+    border-color: #002856;
+  }
+  #course-access-gate button {
+    border: 0;
+    border-radius: 4px;
+    background: #002856;
+    color: #fff;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #course-access-gate button:hover { background: #001a3a; }
+  #course-access-gate button:focus-visible { outline: 2px solid #286DC0; outline-offset: 2px; }
+  #course-access-gate .gate-error {
+    display: none;
+    margin: 0;
+    color: #b83a4b;
+    font-size: 0.875rem;
+  }
+  #course-access-gate.show-error .gate-error { display: block; }
+</style>
+<script>
+(function () {
+  var STORAGE_KEY = "ccstan_access_ok";
+  // SHA-256 of the session access code (plaintext is not stored in the repo)
+  var CODE_HASH = "c7930552f871810b3660d889163157cfca0f66eaf93325c3a09383f3051b338f";
+
+  function unlock() {
+    document.documentElement.classList.remove("access-locked");
+    var gate = document.getElementById("course-access-gate");
+    if (gate) gate.remove();
+  }
+
+  try {
+    if (sessionStorage.getItem(STORAGE_KEY) === CODE_HASH) {
+      return;
+    }
+  } catch (e) {}
+
+  document.documentElement.classList.add("access-locked");
+
+  async function sha256Hex(text) {
+    var data = new TextEncoder().encode(text);
+    var digest = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(digest))
+      .map(function (b) { return b.toString(16).padStart(2, "0"); })
+      .join("");
+  }
+
+  function mountGate() {
+    if (document.getElementById("course-access-gate")) return;
+    var gate = document.createElement("div");
+    gate.id = "course-access-gate";
+    gate.innerHTML =
+      '<div class="gate-card" role="dialog" aria-modal="true" aria-labelledby="gate-title">' +
+        '<p class="gate-kicker">Prepared for Stanford PhD students</p>' +
+        '<h1 id="gate-title">Session access</h1>' +
+        '<p>Enter the access code you were sent to view the materials for Claude Code for Empirical Research.</p>' +
+        '<form id="course-access-form">' +
+          '<label for="course-access-code">Access code</label>' +
+          '<input id="course-access-code" name="code" type="password" autocomplete="current-password" required autofocus placeholder="Access code">' +
+          '<p class="gate-error" id="course-access-error">That code is not correct.</p>' +
+          '<button type="submit">Enter site</button>' +
+        '</form>' +
+      '</div>';
+    document.body.appendChild(gate);
+
+    var form = document.getElementById("course-access-form");
+    var input = document.getElementById("course-access-code");
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      gate.classList.remove("show-error");
+      var hash = await sha256Hex(input.value.trim());
+      if (hash === CODE_HASH) {
+        try { sessionStorage.setItem(STORAGE_KEY, CODE_HASH); } catch (e) {}
+        unlock();
+        return;
+      }
+      gate.classList.add("show-error");
+      input.select();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountGate);
+  } else {
+    mountGate();
+  }
+})();
+</script>
+<!-- Web fallback type stack from the course style guide (yale_som_style.md §2):
+     Source Serif 4 headings, Public Sans body/UI, JetBrains Mono code. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;display=swap">
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Claude Code for Empirical Research</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./before-class.html"> 
+<span class="menu-text">Before Class</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Session</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-session">    
+        <li>
+    <a class="dropdown-item" href="./session.html">
+ <span class="dropdown-text">Agenda</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lab1.html">
+ <span class="dropdown-text">Lab 1: FSDS to a verified figure</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lab2.html">
+ <span class="dropdown-text">Lab 2: Skill and verification drills</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./readings.html"> 
+<span class="menu-text">Readings</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./after-class.html"> 
+<span class="menu-text">After Class</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-data" id="toc-the-data" class="nav-link active" data-scroll-target="#the-data">The data</a></li>
+  <li><a href="#choose-your-tier" id="toc-choose-your-tier" class="nav-link" data-scroll-target="#choose-your-tier">Choose your tier</a></li>
+  <li><a href="#run-it" id="toc-run-it" class="nav-link" data-scroll-target="#run-it">Run it</a></li>
+  <li><a href="#if-you-finish-early" id="toc-if-you-finish-early" class="nav-link" data-scroll-target="#if-you-finish-early">If you finish early</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 1: From FSDS to a Verified Figure</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="module-links">
+<p><a href="assets/stanford_starter.zip" class="btn"><span class="bi bi-file-earmark-zip" aria-hidden="true"></span> Download the starter pack (zip)</a> <a href="assets/slides/html/index.html"><span class="bi bi-easel" aria-hidden="true"></span> Slides</a> <a href="./session.html"><span class="bi bi-calendar3" aria-hidden="true"></span> Agenda</a></p>
+</div>
+<p>In this lab you run the loop from the first demo yourself: raw SEC data in, a figure out, and a written record of every decision in between. You have 50 minutes. The data is already on your laptop from the <a href="./before-class.html">Before Class</a> page, so nothing in this lab depends on the room’s wifi except Claude itself.</p>
+<p>You need three files from <code>~/stanford_starter</code>:</p>
+<ul>
+<li><code>CLAUDE.md.template</code>. Fill in its three blanks and save it as <code>~/stanford_lab/CLAUDE.md</code> before you start Claude.</li>
+<li><code>lab1_opening_prompt.md</code>, the opening prompt with a blank for each tier.</li>
+<li><code>lab1_verify_checklist.md</code>, the checklist you finish with.</li>
+</ul>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you will have at the end
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When the lab is done, your <code>~/stanford_lab</code> folder should contain:</p>
+<ul>
+<li>Scripts that go from the raw FSDS files to your figure. Everything the agent did should be in a file you can rerun.</li>
+<li><code>DATA_PROFILE.md</code>, written before you make any figure. It says what one row of each file is, checks that this is true, and shows how often each tag you use appears.</li>
+<li><code>DECISIONS.md</code>, listing each choice you made and why.</li>
+<li><code>LOG.md</code>, listing each step.</li>
+<li>A table showing how many observations are left after each filter.</li>
+<li>One figure.</li>
+<li>One number from your data that you checked against the firm’s 10-K on EDGAR.</li>
+</ul>
+</div>
+</div>
+<section id="the-data" class="level2">
+<h2 class="anchored" data-anchor-id="the-data">The data</h2>
+<p>You have three quarters of the SEC’s Financial Statement Data Sets in <code>~/stanford_lab/fsds/</code>: <code>2016q1/</code>, <code>2020q1/</code> and <code>2024q1/</code>. FSDS groups filings by the quarter the SEC received them. Most US firms have a December year end and file their 10-K in February or March, so these three files hold mostly fiscal years 2015, 2019 and 2023. Group your results by the fiscal year column <code>fy</code> in <code>sub.txt</code>, not by the name of the folder.</p>
+<p>Two files in each folder matter:</p>
+<ul>
+<li><code>sub.txt</code> has one row per filing: the accession number (<code>adsh</code>), the firm’s CIK, its SIC industry code, the form type, the fiscal year and the period the filing covers.</li>
+<li><code>num.txt</code> has one row per reported value: the accession number again, the XBRL tag (such as <code>Assets</code>), the date the value applies to (<code>ddate</code>), the number of quarters it spans (<code>qtrs</code>), the unit (<code>uom</code>), two fields called <code>segments</code> and <code>coreg</code>, and the value.</li>
+</ul>
+<p>You join the two on <code>adsh</code>. Then four filters apply to every tier, and the opening prompt states all of them:</p>
+<ul>
+<li><strong>Consolidated rows only.</strong> Keep rows where <code>segments</code> and <code>coreg</code> are blank and <code>uom</code> is <code>USD</code>. A blank <code>segments</code> field means the value is for the whole firm rather than one business segment, and a blank <code>coreg</code> means it is for the parent filer rather than a co-registrant. About half the rows in a recent <code>num.txt</code> are segment values, so skipping this filter can count the same firm’s number several times.</li>
+<li><strong>10-Ks only.</strong> Keep <code>form</code> = <code>10-K</code>.</li>
+<li><strong>The right <code>qtrs</code>.</strong> Use <code>qtrs</code> = 0 for balance-sheet values (stocks, such as <code>Assets</code> or cash) and <code>qtrs</code> = 4 for full-year flows (such as R&amp;D expense).</li>
+<li><strong>One quarter at a time.</strong> Each <code>num.txt</code> is about 400 to 470 MB. Read one quarter, keep only the tags and columns you need, then move to the next, rather than loading all three at once.</li>
+</ul>
+<p>A 10-K also reports last year’s numbers next to this year’s, so the same firm-year value can show up in two filings. Keep values whose <code>ddate</code> matches the filing’s own period end, and write that rule into <code>DECISIONS.md</code>.</p>
+</section>
+<section id="choose-your-tier" class="level2">
+<h2 class="anchored" data-anchor-id="choose-your-tier">Choose your tier</h2>
+<p>Pick one. The tiers differ in how much cleaning judgment they ask of you. Pick the one that fits the time and your interests, not necessarily the hardest.</p>
+<p><strong>Base: cash holdings.</strong> Cash and cash equivalents divided by total assets, as the median across firms for each fiscal year. The numerator tag is <code>CashAndCashEquivalentsAtCarryingValue</code> and the denominator is <code>Assets</code>, both with <code>qtrs</code> = 0. Check the cash tag’s coverage in <code>DATA_PROFILE.md</code> before you compute anything.</p>
+<p>What to expect, from the class files (share of 10-Ks with a consolidated value for the filing’s own period end):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tag</th>
+<th>2016q1</th>
+<th>2020q1</th>
+<th>2024q1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Assets</code></td>
+<td>98.4%</td>
+<td>98.7%</td>
+<td>99.4%</td>
+</tr>
+<tr class="even">
+<td><code>CashAndCashEquivalentsAtCarryingValue</code></td>
+<td>91.3%</td>
+<td>85.1%</td>
+<td>80.5%</td>
+</tr>
+<tr class="odd">
+<td><code>CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents</code></td>
+<td>0%</td>
+<td>57.5%</td>
+<td>79.3%</td>
+</tr>
+</tbody>
+</table>
+<p>The main cash tag loses coverage after the 2018 restricted-cash standard, as filers move to the tag that includes restricted cash. The median cash-to-assets ratio is about 7 to 9 percent, and part of the rise in the last year comes from which firms drop out of the main tag. Report the median both ways: main tag only, and with the restricted-cash tag as a fallback. Financial firms are more than a quarter of filers, so also say whether you keep them.</p>
+<p><strong>Standard: R&amp;D intensity by industry.</strong> R&amp;D expense divided by total assets: <code>ResearchAndDevelopmentExpense</code> with <code>qtrs</code> = 4 over <code>Assets</code> with <code>qtrs</code> = 0. Report the median by two-digit SIC code (<code>sic2</code>, the first two digits of <code>sic</code> in <code>sub.txt</code>) for the five largest <code>sic2</code> groups, by fiscal year. You decide what “largest” means (most firms reporting R&amp;D is the simplest choice) and record it in <code>DECISIONS.md</code>.</p>
+<p>What to expect: <code>ResearchAndDevelopmentExpense</code> appears in 26 to 33 percent of 10-Ks in these files. By that count the five largest groups are SIC 28 (chemicals and pharmaceuticals), 73 (business services, including software), 38 (instruments), 36 (electronics) and 35 (machinery and computers). SIC 28’s median is far above the rest, above 20 percent of assets, because it holds hundreds of small biotechs.</p>
+<p>Check at least one large firm against its 10-K. A tag name can mislead: in Johnson &amp; Johnson’s fiscal 2023 filing, <code>ResearchAndDevelopmentExpense</code> is $483 million, a charge for buying in-process R&amp;D, while its income-statement R&amp;D of about $15.1 billion sits under <code>ResearchAndDevelopmentExpenseExcludingAcquiredInProcessCost</code>.</p>
+<p>One warning. Firms with no R&amp;D mostly don’t report the tag at all, so in this data zero R&amp;D shows up as a missing tag, not as a zero. Treat a missing tag as missing, not as zero, and say in <code>DECISIONS.md</code> that your median covers only firms that report R&amp;D.</p>
+<p><strong>Stretch: your own question.</strong> Use the research question you brought. It has to be answerable, at least in part, from these three quarters of FSDS. Find the tags you need first and check their coverage in <code>DATA_PROFILE.md</code> before you build anything, because a tag that appears in 5 percent of 10-Ks will not support a figure. The stretch tier uses the same opening prompt structure, the same paper trail and the same verify checklist as the other two.</p>
+</section>
+<section id="run-it" class="level2">
+<h2 class="anchored" data-anchor-id="run-it">Run it</h2>
+<p>Work in this order. Each step catches a different kind of mistake before it reaches the figure.</p>
+<ol type="1">
+<li><p><strong>Start Claude in your data folder.</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/stanford_lab <span class="kw">&amp;&amp;</span> <span class="ex">claude</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>Fill in the opening prompt.</strong> Open <code>lab1_opening_prompt.md</code>. It has six parts: DATA, JOIN, MEASURE, AGGREGATION, OUTPUT and PAPER TRAIL. Fill in the blanks for your tier in MEASURE and AGGREGATION, and change OUTPUT if you want a different figure. Leave the PAPER TRAIL part exactly as written, even if you’re short on time, because it is what produces <code>DATA_PROFILE.md</code>, <code>DECISIONS.md</code> and <code>LOG.md</code>. Paste the prompt and send it.</p></li>
+<li><p><strong>Read <code>DATA_PROFILE.md</code> as soon as it exists</strong>, before any measure is computed. Check the row counts, the uniqueness test (the number of rows should equal the number of distinct keys) and the tag coverage for each quarter. If anything looks wrong, stop and ask about it now. Press Esc if Claude is already moving on.</p></li>
+<li><p><strong>Look at the raw data.</strong> Ask for a plot of the firm-level ratio for each year, before any medians. Extreme values and impossible ratios (cash above total assets, say) are much easier to see here than in a median.</p></li>
+<li><p><strong>Make the figure.</strong> Let Claude draw it, then refine it in no more than three rounds.</p></li>
+<li><p><strong>Check one number against the 10-K.</strong> Pick one firm in your sample with a December year end. These are first-quarter files, so firms with other year ends (Apple’s ends in September) mostly appear only through their 10-Qs. Find its 10-K for one of your fiscal years on <a href="https://www.sec.gov/edgar/search/">EDGAR</a>, open the balance sheet (or the income statement, for R&amp;D), and compare the value with the raw value in your data, before any division. Write the firm, the filing, the two numbers and whether they match into <code>DECISIONS.md</code>.</p></li>
+<li><p><strong>Work through the checklist</strong> below.</p></li>
+</ol>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common failure: a clean-looking figure
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A figure with tidy axes and a sensible trend can still be wrong. A missing consolidated-row filter, for example, can inflate values and still produce a smooth line. Work through the checklist even when the figure looks fine.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Verify this: the Lab 1 checklist
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The same list is in <code>lab1_verify_checklist.md</code>, with space to write in your checks. It is pass/fail and you grade yourself.</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><code>DATA_PROFILE.md</code> written before the first figure: what one row is, a uniqueness test with both counts, tag coverage by quarter, and the rule for prior-year values and amendments</label></li>
+<li><label><input type="checkbox"><code>sub.txt</code> and <code>num.txt</code> joined on <code>adsh</code>, with row counts before and after the join</label></li>
+<li><label><input type="checkbox">Consolidated filter applied (<code>segments</code> and <code>coreg</code> blank, <code>uom</code> = <code>USD</code>), with row counts before and after, and no duplicate rows left</label></li>
+<li><label><input type="checkbox">Only <code>form</code> = <code>10-K</code>, and <code>qtrs</code> = 0 for stocks and <code>qtrs</code> = 4 for flows</label></li>
+<li><label><input type="checkbox">Attrition table present, and every change in sample size explained in <code>DECISIONS.md</code></label></li>
+<li><label><input type="checkbox">Your tier’s tag decision in <code>DECISIONS.md</code> (Base: cash fallback and financial firms; Standard: missing R&amp;D is missing, not zero; Stretch: coverage of your tags)</label></li>
+<li><label><input type="checkbox">Raw firm-level values plotted before aggregating</label></li>
+<li><label><input type="checkbox">Two sanity checks written down, each with a source: one benchmark comparison and one plausibility check</label></li>
+<li><label><input type="checkbox">One number checked against the firm’s actual 10-K on EDGAR, and the result written down</label></li>
+<li><label><input type="checkbox">Figure produced by a named script, and nothing exists only in the chat</label></li>
+<li><label><input type="checkbox">A README that says how to rerun the pipeline from <code>fsds/</code> to the figure, and at least one commit</label></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="if-you-finish-early" class="level2">
+<h2 class="anchored" data-anchor-id="if-you-finish-early">If you finish early</h2>
+<p>Pick one:</p>
+<ul>
+<li>Do the next tier up, in the same folder, and compare what changed in your decisions.</li>
+<li>Test your README: copy the folder without the outputs and check that a classmate could rerun the pipeline from it.</li>
+</ul>
+<p>Keep this folder. Lab 2 turns this pipeline into a skill.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+/* Lab checklists: remember ticked boxes per page in this browser only
+   (convenience, not a record), and add a small progress line + reset. */
+(function () {
+  function init() {
+    var lists = document.querySelectorAll("main ul.task-list");
+    if (!lists.length) return;
+    var key = "ccstan_checklist:" + location.pathname;
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch (e) {}
+
+    lists.forEach(function (ul, li) {
+      var boxes = ul.querySelectorAll('input[type="checkbox"]');
+      var status = document.createElement("p");
+      status.className = "checklist-status";
+      status.setAttribute("aria-live", "polite");
+
+      function refresh() {
+        var n = 0;
+        boxes.forEach(function (b) {
+          var item = b.closest("li");
+          if (item) item.classList.toggle("is-checked", b.checked);
+          if (b.checked) n++;
+        });
+        status.firstChild.nodeValue = n + " of " + boxes.length + " checked ";
+      }
+
+      status.appendChild(document.createTextNode(""));
+      var reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "checklist-reset";
+      reset.textContent = "Clear";
+      status.appendChild(reset);
+
+      boxes.forEach(function (b, bi) {
+        var id = li + ":" + bi;
+        if (saved[id]) b.checked = true;
+        b.addEventListener("change", function () {
+          saved[id] = b.checked;
+          try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+          refresh();
+        });
+      });
+      reset.addEventListener("click", function () {
+        boxes.forEach(function (b, bi) { b.checked = false; saved[li + ":" + bi] = false; });
+        try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+        refresh();
+      });
+
+      ul.parentNode.insertBefore(status, ul.nextSibling);
+      refresh();
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script>
+/* Session video: show captions in a strip under the player instead of on
+   top of the slide, where they collided with slide text and with the
+   controls after a seek. Full screen falls back to the browser's own
+   captions. The player's CC button still turns captions on and off. */
+(function () {
+  function setup(v) {
+    var frame = v.closest(".module-video__frame");
+    var track = null;
+    for (var i = 0; i < v.textTracks.length; i++) {
+      var t = v.textTracks[i];
+      if (t.kind === "captions" || t.kind === "subtitles") { track = t; break; }
+    }
+    if (!frame || !track) return;
+
+    var strip = document.createElement("div");
+    strip.className = "module-video__captions";
+    frame.insertAdjacentElement("afterend", strip);
+
+    var wantOn = track.mode !== "disabled";
+    var internal = false;
+
+    function isFull() {
+      return document.fullscreenElement === v ||
+             document.webkitFullscreenElement === v ||
+             v.webkitDisplayingFullscreen === true;
+    }
+    function setMode(m) {
+      if (track.mode === m) return;
+      internal = true;
+      track.mode = m;
+      setTimeout(function () { internal = false; }, 0);
+    }
+    function render() {
+      strip.hidden = !wantOn || isFull();
+      strip.textContent = "";
+      if (strip.hidden || !track.activeCues) return;
+      for (var i = 0; i < track.activeCues.length; i++) {
+        var line = document.createElement("span");
+        line.className = "module-video__caption-line";
+        line.appendChild(track.activeCues[i].getCueAsHTML());
+        strip.appendChild(line);
+      }
+    }
+    function sync() {
+      if (isFull()) setMode(wantOn ? "showing" : "disabled");
+      else setMode(wantOn ? "hidden" : "disabled");
+      render();
+    }
+
+    v.textTracks.addEventListener("change", function () {
+      if (internal) return;
+      if (isFull()) {
+        wantOn = track.mode === "showing";
+      } else if (track.mode === "showing") {
+        // The CC button only ever turns the track to "showing"; treat it as a toggle.
+        wantOn = !wantOn;
+      } else if (track.mode === "disabled") {
+        wantOn = false;
+      }
+      sync();
+    });
+    track.addEventListener("cuechange", render);
+    ["seeked", "loadedmetadata"].forEach(function (e) { v.addEventListener(e, render); });
+    ["fullscreenchange", "webkitfullscreenchange"].forEach(function (e) {
+      document.addEventListener(e, sync);
+    });
+    ["webkitbeginfullscreen", "webkitendfullscreen"].forEach(function (e) {
+      v.addEventListener(e, function () { setTimeout(sync, 0); });
+    });
+    sync();
+  }
+  function init() {
+    document.querySelectorAll(".module-video video").forEach(setup);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/johnmbarrios\.com\/claude-code-stanford\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ John Barrios · Yale School of Management · Prepared for Stanford PhD students · 
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="./about.html">
+<p>About</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

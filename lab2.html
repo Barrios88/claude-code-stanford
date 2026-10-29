@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 2: A Skill and Three Verification Drills – Claude Code for Empirical Research</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-8eac5589bfce7e5f66782cfe7e5efc72.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-aed0888da02e542b20c5c8cc03827edf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+  html.access-locked body > *:not(#course-access-gate) { visibility: hidden !important; }
+  #course-access-gate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: #f5f7fa;
+  }
+  html.access-locked #course-access-gate { display: flex; }
+  #course-access-gate .gate-card {
+    width: min(26rem, 100%);
+    background: #fff;
+    border: 1px solid #d8dee6;
+    border-radius: 4px;
+    padding: 2.25rem 2rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  #course-access-gate .gate-kicker {
+    margin: 0 0 0.75rem;
+    color: #6f665e;
+    font-family: "Public Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  #course-access-gate h1 {
+    margin: 0 0 0.75rem;
+    color: #002856;
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 0;
+    padding: 0;
+  }
+  #course-access-gate p {
+    margin: 0 0 1.25rem;
+    color: #6f665e;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  #course-access-gate form {
+    display: grid;
+    gap: 0.75rem;
+  }
+  #course-access-gate label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  #course-access-gate input[type="password"] {
+    width: 100%;
+    border: 1px solid #b9c2ce;
+    border-radius: 4px;
+    padding: 0.7rem 0.8rem;
+    font-size: 1rem;
+    color: #212529;
+  }
+  #course-access-gate input[type="password"]:focus {
+    outline: 2px solid #002856;
+    outline-offset: 1px;
+    border-color: #002856;
+  }
+  #course-access-gate button {
+    border: 0;
+    border-radius: 4px;
+    background: #002856;
+    color: #fff;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #course-access-gate button:hover { background: #001a3a; }
+  #course-access-gate button:focus-visible { outline: 2px solid #286DC0; outline-offset: 2px; }
+  #course-access-gate .gate-error {
+    display: none;
+    margin: 0;
+    color: #b83a4b;
+    font-size: 0.875rem;
+  }
+  #course-access-gate.show-error .gate-error { display: block; }
+</style>
+<script>
+(function () {
+  var STORAGE_KEY = "ccstan_access_ok";
+  // SHA-256 of the session access code (plaintext is not stored in the repo)
+  var CODE_HASH = "c7930552f871810b3660d889163157cfca0f66eaf93325c3a09383f3051b338f";
+
+  function unlock() {
+    document.documentElement.classList.remove("access-locked");
+    var gate = document.getElementById("course-access-gate");
+    if (gate) gate.remove();
+  }
+
+  try {
+    if (sessionStorage.getItem(STORAGE_KEY) === CODE_HASH) {
+      return;
+    }
+  } catch (e) {}
+
+  document.documentElement.classList.add("access-locked");
+
+  async function sha256Hex(text) {
+    var data = new TextEncoder().encode(text);
+    var digest = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(digest))
+      .map(function (b) { return b.toString(16).padStart(2, "0"); })
+      .join("");
+  }
+
+  function mountGate() {
+    if (document.getElementById("course-access-gate")) return;
+    var gate = document.createElement("div");
+    gate.id = "course-access-gate";
+    gate.innerHTML =
+      '<div class="gate-card" role="dialog" aria-modal="true" aria-labelledby="gate-title">' +
+        '<p class="gate-kicker">Prepared for Stanford PhD students</p>' +
+        '<h1 id="gate-title">Session access</h1>' +
+        '<p>Enter the access code you were sent to view the materials for Claude Code for Empirical Research.</p>' +
+        '<form id="course-access-form">' +
+          '<label for="course-access-code">Access code</label>' +
+          '<input id="course-access-code" name="code" type="password" autocomplete="current-password" required autofocus placeholder="Access code">' +
+          '<p class="gate-error" id="course-access-error">That code is not correct.</p>' +
+          '<button type="submit">Enter site</button>' +
+        '</form>' +
+      '</div>';
+    document.body.appendChild(gate);
+
+    var form = document.getElementById("course-access-form");
+    var input = document.getElementById("course-access-code");
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      gate.classList.remove("show-error");
+      var hash = await sha256Hex(input.value.trim());
+      if (hash === CODE_HASH) {
+        try { sessionStorage.setItem(STORAGE_KEY, CODE_HASH); } catch (e) {}
+        unlock();
+        return;
+      }
+      gate.classList.add("show-error");
+      input.select();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountGate);
+  } else {
+    mountGate();
+  }
+})();
+</script>
+<!-- Web fallback type stack from the course style guide (yale_som_style.md §2):
+     Source Serif 4 headings, Public Sans body/UI, JetBrains Mono code. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;display=swap">
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Claude Code for Empirical Research</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./before-class.html"> 
+<span class="menu-text">Before Class</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-session" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Session</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-session">    
+        <li>
+    <a class="dropdown-item" href="./session.html">
+ <span class="dropdown-text">Agenda</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lab1.html">
+ <span class="dropdown-text">Lab 1: FSDS to a verified figure</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./lab2.html">
+ <span class="dropdown-text">Lab 2: Skill and verification drills</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./readings.html"> 
+<span class="menu-text">Readings</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./after-class.html"> 
+<span class="menu-text">After Class</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#demo-2-edgar-text-to-data" id="toc-demo-2-edgar-text-to-data" class="nav-link active" data-scroll-target="#demo-2-edgar-text-to-data">Demo 2: EDGAR text to data</a></li>
+  <li><a href="#lab-2a" id="toc-lab-2a" class="nav-link" data-scroll-target="#lab-2a">Part A: turn your pipeline into a skill</a></li>
+  <li><a href="#lab-2b" id="toc-lab-2b" class="nav-link" data-scroll-target="#lab-2b">Part B: three verification drills</a>
+  <ul class="collapse">
+  <li><a href="#drill-1-the-two-check-credential-audit" id="toc-drill-1-the-two-check-credential-audit" class="nav-link" data-scroll-target="#drill-1-the-two-check-credential-audit">Drill 1: the two-check credential audit</a></li>
+  <li><a href="#drill-2-a-clean-room-referee" id="toc-drill-2-a-clean-room-referee" class="nav-link" data-scroll-target="#drill-2-a-clean-room-referee">Drill 2: a clean-room referee</a></li>
+  <li><a href="#drill-3-one-deny-rule-tested" id="toc-drill-3-one-deny-rule-tested" class="nav-link" data-scroll-target="#drill-3-one-deny-rule-tested">Drill 3: one deny rule, tested</a></li>
+  </ul></li>
+  <li><a href="#exit-ticket" id="toc-exit-ticket" class="nav-link" data-scroll-target="#exit-ticket">Exit ticket</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 2: A Skill and Three Verification Drills</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="module-links">
+<p><a href="assets/stanford_starter.zip" class="btn"><span class="bi bi-file-earmark-zip" aria-hidden="true"></span> Download the starter pack (zip)</a> <a href="assets/slides/html/index.html"><span class="bi bi-easel" aria-hidden="true"></span> Slides</a> <a href="./session.html"><span class="bi bi-calendar3" aria-hidden="true"></span> Agenda</a></p>
+</div>
+<p>Lab 2 has two parts. In Part A (about 25 minutes, after a short demo) you turn the pipeline you built in Lab 1 into a skill: a written procedure Claude loads by itself when a request matches it, so you never have to explain the pipeline again. In Part B (25 minutes) you run three short drills that check whether your project is safe to share and whether your results hold up for a reader who did not see you build them.</p>
+<p>You need two files from the starter pack: <code>SKILL_skeleton.md</code> for Part A and <code>lab2_verification_drills.md</code> for Part B.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What you will have at the end
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When the lab is done, you should have:</p>
+<ul>
+<li>A skill file, <code>.claude/skills/fsds-panel/SKILL.md</code>, in your Lab 1 folder. You tested it in a new session with a request that does not mention the skill by name.</li>
+<li>The output of both credential-audit checks, saved in <code>VERIFY_NOTES.md</code>.</li>
+<li>A referee report in <code>~/referee_room/review/</code> with three objections. It comes from a session that saw only your write-up.</li>
+<li>One deny rule in <code>.claude/settings.json</code>, and a note on what happened when you tested it.</li>
+</ul>
+</div>
+</div>
+<section id="demo-2-edgar-text-to-data" class="level2">
+<h2 class="anchored" data-anchor-id="demo-2-edgar-text-to-data">Demo 2: EDGAR text to data</h2>
+<p>Before Part A, I show a five-minute demo that applies the same steps to text. Claude pulls the Risk Factors section (Item 1A) from a set of 10-Ks on EDGAR and counts a keyword in each one. Two details are worth copying in your own work. Every downloaded filing is cached, so a rerun fetches nothing it already has. And the pipeline writes a quality report that says how many sections it extracted and gives a reason for every one it missed. A count of successes without reasons for the failures doesn’t tell you whether to trust the measure.</p>
+</section>
+<section id="lab-2a" class="level2">
+<h2 class="anchored" data-anchor-id="lab-2a">Part A: turn your pipeline into a skill</h2>
+<p>A skill is a folder holding a <code>SKILL.md</code> file. The file starts with a short header (the frontmatter) with a <code>name</code> and a <code>description</code>, followed by the steps of the procedure. Claude reads the description of every installed skill at the start of a session and loads the full steps only when a request matches it. So the description decides whether the skill ever runs.</p>
+<p>Most first skills fail in the same way: the description reads as a title. Compare:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> fsds-panel</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">description</span><span class="kw">:</span><span class="at"> FSDS data tool</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> fsds-panel</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">description</span><span class="kw">:</span><span class="at"> Use when the user asks to build a firm-year panel or a financial</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">  ratio from SEC Financial Statement Data Sets (FSDS), mentions sub.txt or</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="at">  num.txt, or asks for a median of an XBRL tag by year or industry.</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The first says what the skill is. The second describes what a real request looks like, so Claude has something to match.</p>
+<p><strong>Build it.</strong></p>
+<ol type="1">
+<li><p>In your Lab 1 folder, make the skill folder at project scope, so it travels with this project:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/stanford_lab <span class="kw">&amp;&amp;</span> <span class="fu">mkdir</span> <span class="at">-p</span> .claude/skills/fsds-panel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Copy <code>SKILL_skeleton.md</code> from the starter pack to <code>.claude/skills/fsds-panel/SKILL.md</code>.</p></li>
+<li><p>In your Lab 1 session (or a new one in the same folder), ask Claude to fill in the skeleton from what you actually did: the inputs (which quarters, which tags, which aggregation), the steps in order, the filters, the paper-trail files, and the checks. Ask it to keep the steps general enough to work for a different tag.</p></li>
+<li><p>Read the result. Rewrite the <code>description</code> yourself if it reads like a title. List the phrases a real request would use.</p></li>
+<li><p>Make sure <code>---</code> is on line 1 of the file, with no comment or blank line above it. Claude reads the frontmatter only when the file starts with it. Delete any leftover comments from the skeleton.</p></li>
+</ol>
+<p><strong>Test it.</strong> Don’t test in the session where you wrote the skill. That session already knows the pipeline, so it will do the work whether or not the skill fires.</p>
+<ol type="1">
+<li>Leave Claude (type <code>/exit</code>) and start a fresh session in the same folder with <code>claude</code>.</li>
+<li>Ask for something the skill should handle without naming it, for a measure you did not build in Lab 1. For example: <em>“What was the median ratio of long-term debt to total assets by fiscal year in the FSDS quarters in fsds/?”</em></li>
+<li>Watch the transcript. If the skill fires, Claude says it is using the <code>fsds-panel</code> skill. If instead it starts reading your Lab 1 scripts or asking how the files are laid out, the skill did not fire. Rewrite the description and test again in another fresh session.</li>
+<li>Confirm that the run follows your steps: the consolidated filter, <code>DATA_PROFILE.md</code> before any figure, and the paper trail.</li>
+</ol>
+<p>You can always run a skill on purpose by typing <code>/fsds-panel</code>. That doesn’t test the description, so do the test above first.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Verify this: the skill
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul class="task-list">
+<li><label><input type="checkbox"><code>SKILL.md</code> is at <code>.claude/skills/fsds-panel/SKILL.md</code>, with <code>---</code> on line 1</label></li>
+<li><label><input type="checkbox">The description lists phrases a real request would use, not a title</label></li>
+<li><label><input type="checkbox">In a fresh session, a request that doesn’t name the skill makes it fire</label></li>
+<li><label><input type="checkbox">The run follows the skill’s steps, including the consolidated filter and <code>DATA_PROFILE.md</code></label></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="lab-2b" class="level2">
+<h2 class="anchored" data-anchor-id="lab-2b">Part B: three verification drills</h2>
+<p>Run all three on your own project. If you have a research repository on your laptop, use it for Drill 1, because that is where an exposed key would actually hurt you. Otherwise use <code>~/stanford_lab</code>. Drill 1 needs a git repository. If your Lab 1 folder isn’t one yet, run <code>git init</code> and <code>echo "fsds/" &gt; .gitignore</code> there, then ask Claude to commit your scripts.</p>
+<section id="drill-1-the-two-check-credential-audit" class="level3">
+<h3 class="anchored" data-anchor-id="drill-1-the-two-check-credential-audit">Drill 1: the two-check credential audit</h3>
+<p>These two checks come from the full course’s Module 5, adapted for public data and API keys. Run both from the root of the repository. Both should come back empty. Paste both outputs into <code>VERIFY_NOTES.md</code> in the repo.</p>
+<p><strong>Check 1: has a credential file ever been committed?</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--all</span> <span class="at">--full-history</span> <span class="at">--oneline</span> <span class="at">--</span> <span class="st">'*.env'</span> <span class="st">'*.env.*'</span> <span class="st">'.mcp.json'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Expected output: nothing.</p>
+<p>This looks for a <code>.env</code> file, or a variant such as <code>.env.local</code>, in any folder and at any point in the history, plus a project-level <code>.mcp.json</code>, which holds credentials if you ever registered an MCP server with project scope. If it returns even one commit, a credential file was committed at some point. Deleting the file now does not remove it from history. Anyone who clones the repo, including a coauthor, a referee running a replication package or a stranger on GitHub, can still find it in an old commit with <code>git show &lt;commit&gt;:&lt;path&gt;</code>.</p>
+<p><strong>Check 2: does your actual key appear anywhere?</strong></p>
+<p>In the full course this check searches for your WRDS password. This session uses no WRDS, so run it for each secret this project actually uses, such as an Anthropic or OpenAI API key or a GitHub token. Type <code>read -s SECRET</code>, paste the key (it won’t echo), and run the two searches with <code>$SECRET</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">read</span> <span class="at">-s</span> <span class="va">SECRET</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--all</span> <span class="at">--oneline</span> <span class="at">-S</span><span class="st">"</span><span class="va">$SECRET</span><span class="st">"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> grep <span class="at">-l</span> <span class="at">-F</span> <span class="at">--untracked</span> <span class="at">-e</span> <span class="st">"</span><span class="va">$SECRET</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Expected output: nothing.</p>
+<ul>
+<li><code>git log -S</code> lists every commit that ever added or removed the key, including in a script you have since deleted.</li>
+<li><code>git grep</code> lists files git would pick up that contain it now. It skips gitignored files.</li>
+</ul>
+<p>Both searches print commit IDs or file names, never the key. They look for the key itself, not the name of the variable that holds it, so a script that reads the key from the environment (the right way) passes, and a script with the key typed into it fails. Do not use a plain <code>grep -r "API_KEY" .</code> instead: it flags correct code and misses a key that was committed and later deleted.</p>
+<p>If the project uses no secrets at all, run Check 1 and write “no secrets in this project” in <code>VERIFY_NOTES.md</code> for Check 2.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>If either check finds something
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Treat the credential as compromised right away.</strong> Do not assume it is fine because no one saw it. Assume any credential that has ever been committed to a git repository is exposed, even in a private repo and even if you never pushed it anywhere.</li>
+<li><strong>Revoke and rotate first, clean up second.</strong> Regenerate the API key (or change the password) before you touch the repository. If you clean the repo first and rotate later, the exposed credential stays valid while you work.</li>
+<li><strong>Remove it from history, not just the current version.</strong> Deleting the current copy is not enough while the secret is still reachable in <code>git log</code> history. A history rewrite with <code>git filter-repo</code> or BFG removes it. If the project is small and early, starting a fresh repository is simpler.</li>
+<li><strong>Confirm the fix</strong> by re-running both checks and getting a clean result before you consider the audit passed.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="drill-2-a-clean-room-referee" class="level3">
+<h3 class="anchored" data-anchor-id="drill-2-a-clean-room-referee">Drill 2: a clean-room referee</h3>
+<p>A session that watched you build the pipeline has heard all your reasons and tends to accept them. A referee has heard none of them. So give the review its own room: a fresh session in an empty folder that holds only what a reader of your paper would see, plus a deny rule that stops the session from editing it.</p>
+<ol type="1">
+<li><p>In <code>~/stanford_lab</code>, write <code>summary.md</code> yourself, in about five minutes and without the agent. Include the figure caption, a short paragraph on how the sample was built (files, filters, tags and your tag choice), and the attrition table. Leave out <code>DECISIONS.md</code> and your scripts. A referee gets the paper, not your notes.</p></li>
+<li><p>Build the room and start a fresh session in it. Replace <code>my_figure.png</code> with the name of your figure:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/referee_room/paper ~/referee_room/.claude</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> ~/stanford_lab/summary.md ~/referee_room/paper/</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> ~/stanford_lab/my_figure.png ~/referee_room/paper/</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'{"permissions":{"deny":["Edit(./paper/**)"]}}'</span> <span class="op">&gt;</span> ~/referee_room/.claude/settings.json</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/referee_room <span class="kw">&amp;&amp;</span> <span class="ex">claude</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Send this prompt:</p>
+<pre><code>You are refereeing a short empirical exhibit for an accounting journal. You
+have only what is in paper/. Do not edit any file. Read the caption, the
+sample description and the attrition table, and look at the figure. Write
+the three most serious objections to review/referee.md, most serious first.
+For each, say what claim it undermines and what evidence would answer it.
+Check whether the stated filters can produce the N in the attrition table.
+Aim the criticism at the exhibit, not the author.</code></pre></li>
+<li><p>Read <code>review/referee.md</code>. In <code>VERIFY_NOTES.md</code>, write down one objection you had stopped seeing. Then answer one objection in writing at the bottom of <code>review/referee.md</code>, not in the chat. In the chat, the model tends to give in.</p></li>
+</ol>
+<p>Your personal <code>~/.claude/CLAUDE.md</code>, if you have one, still loads in this room, so keep project details out of it. If the report is mostly praise, ask again for the three most serious problems.</p>
+</section>
+<section id="drill-3-one-deny-rule-tested" class="level3">
+<h3 class="anchored" data-anchor-id="drill-3-one-deny-rule-tested">Drill 3: one deny rule, tested</h3>
+<p>A line in CLAUDE.md saying “never change the raw data” is a request. Claude usually follows it, but nothing enforces it. A deny rule in <code>.claude/settings.json</code> is enforced: Claude Code refuses the matching action in every permission mode.</p>
+<ol type="1">
+<li><p>In <code>~/stanford_lab</code>, create <code>.claude/settings.json</code> (or add to it if it exists):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"permissions"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"deny"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Edit(./fsds/**)"</span><span class="ot">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Read(./.env)"</span><span class="ot">,</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Read(./.env.*)"</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Record a fingerprint of one raw file: <code>shasum fsds/2024q1/readme.htm</code></p></li>
+<li><p>Start a fresh session in the folder so the rules load (<code>/exit</code>, then <code>claude</code>). Run <code>/permissions</code> and check that the three rules are listed.</p></li>
+<li><p>Ask: <em>“Append the line ‘test’ to fsds/2024q1/readme.htm with your file edit tool. Then try a shell command, echo test &gt;&gt; fsds/2024q1/readme.htm. Quote any error you get.”</em> Both attempts should be refused.</p></li>
+<li><p>Run <code>shasum fsds/2024q1/readme.htm</code> again. It must match step 2. Paste the refusal text and both fingerprints into <code>VERIFY_NOTES.md</code>.</p></li>
+<li><p>Commit <code>.claude/settings.json</code>, so anyone who works in the repo gets the same rules.</p></li>
+</ol>
+<p>Know the limit. The rule blocks Claude’s file tools and shell commands that name the path. It does not stop a Python script that opens the file itself. Only an operating-system sandbox (<code>/sandbox</code>, or a container) blocks that.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Verify this: the drills
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul class="task-list">
+<li><label><input type="checkbox">Check 1 run and its output pasted into <code>VERIFY_NOTES.md</code></label></li>
+<li><label><input type="checkbox">Check 2 run for each secret the project uses (or “no secrets” written down), with output pasted</label></li>
+<li><label><input type="checkbox"><code>review/referee.md</code> exists in <code>~/referee_room</code>, written by a session that saw only <code>paper/</code></label></li>
+<li><label><input type="checkbox">One objection you had stopped seeing in <code>VERIFY_NOTES.md</code>, and one answered in writing in the report file</label></li>
+<li><label><input type="checkbox">Deny rules in <code>.claude/settings.json</code>, tested in a fresh session, with the refusal and both fingerprints in <code>VERIFY_NOTES.md</code></label></li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="exit-ticket" class="level2">
+<h2 class="anchored" data-anchor-id="exit-ticket">Exit ticket</h2>
+<p>At the end of class, fill in <code>exit_ticket.md</code> from the starter pack: one thing that broke today and how you found out, one thing you will verify next time, one research task you will delegate to an agent, and one you won’t.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+/* Lab checklists: remember ticked boxes per page in this browser only
+   (convenience, not a record), and add a small progress line + reset. */
+(function () {
+  function init() {
+    var lists = document.querySelectorAll("main ul.task-list");
+    if (!lists.length) return;
+    var key = "ccstan_checklist:" + location.pathname;
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch (e) {}
+
+    lists.forEach(function (ul, li) {
+      var boxes = ul.querySelectorAll('input[type="checkbox"]');
+      var status = document.createElement("p");
+      status.className = "checklist-status";
+      status.setAttribute("aria-live", "polite");
+
+      function refresh() {
+        var n = 0;
+        boxes.forEach(function (b) {
+          var item = b.closest("li");
+          if (item) item.classList.toggle("is-checked", b.checked);
+          if (b.checked) n++;
+        });
+        status.firstChild.nodeValue = n + " of " + boxes.length + " checked ";
+      }
+
+      status.appendChild(document.createTextNode(""));
+      var reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "checklist-reset";
+      reset.textContent = "Clear";
+      status.appendChild(reset);
+
+      boxes.forEach(function (b, bi) {
+        var id = li + ":" + bi;
+        if (saved[id]) b.checked = true;
+        b.addEventListener("change", function () {
+          saved[id] = b.checked;
+          try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+          refresh();
+        });
+      });
+      reset.addEventListener("click", function () {
+        boxes.forEach(function (b, bi) { b.checked = false; saved[li + ":" + bi] = false; });
+        try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) {}
+        refresh();
+      });
+
+      ul.parentNode.insertBefore(status, ul.nextSibling);
+      refresh();
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script>
+/* Session video: show captions in a strip under the player instead of on
+   top of the slide, where they collided with slide text and with the
+   controls after a seek. Full screen falls back to the browser's own
+   captions. The player's CC button still turns captions on and off. */
+(function () {
+  function setup(v) {
+    var frame = v.closest(".module-video__frame");
+    var track = null;
+    for (var i = 0; i < v.textTracks.length; i++) {
+      var t = v.textTracks[i];
+      if (t.kind === "captions" || t.kind === "subtitles") { track = t; break; }
+    }
+    if (!frame || !track) return;
+
+    var strip = document.createElement("div");
+    strip.className = "module-video__captions";
+    frame.insertAdjacentElement("afterend", strip);
+
+    var wantOn = track.mode !== "disabled";
+    var internal = false;
+
+    function isFull() {
+      return document.fullscreenElement === v ||
+             document.webkitFullscreenElement === v ||
+             v.webkitDisplayingFullscreen === true;
+    }
+    function setMode(m) {
+      if (track.mode === m) return;
+      internal = true;
+      track.mode = m;
+      setTimeout(function () { internal = false; }, 0);
+    }
+    function render() {
+      strip.hidden = !wantOn || isFull();
+      strip.textContent = "";
+      if (strip.hidden || !track.activeCues) return;
+      for (var i = 0; i < track.activeCues.length; i++) {
+        var line = document.createElement("span");
+        line.className = "module-video__caption-line";
+        line.appendChild(track.activeCues[i].getCueAsHTML());
+        strip.appendChild(line);
+      }
+    }
+    function sync() {
+      if (isFull()) setMode(wantOn ? "showing" : "disabled");
+      else setMode(wantOn ? "hidden" : "disabled");
+      render();
+    }
+
+    v.textTracks.addEventListener("change", function () {
+      if (internal) return;
+      if (isFull()) {
+        wantOn = track.mode === "showing";
+      } else if (track.mode === "showing") {
+        // The CC button only ever turns the track to "showing"; treat it as a toggle.
+        wantOn = !wantOn;
+      } else if (track.mode === "disabled") {
+        wantOn = false;
+      }
+      sync();
+    });
+    track.addEventListener("cuechange", render);
+    ["seeked", "loadedmetadata"].forEach(function (e) { v.addEventListener(e, render); });
+    ["fullscreenchange", "webkitfullscreenchange"].forEach(function (e) {
+      document.addEventListener(e, sync);
+    });
+    ["webkitbeginfullscreen", "webkitendfullscreen"].forEach(function (e) {
+      v.addEventListener(e, function () { setTimeout(sync, 0); });
+    });
+    sync();
+  }
+  function init() {
+    document.querySelectorAll(".module-video video").forEach(setup);
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/johnmbarrios\.com\/claude-code-stanford\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ John Barrios · Yale School of Management · Prepared for Stanford PhD students · 
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="./about.html">
+<p>About</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
