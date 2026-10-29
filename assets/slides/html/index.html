@@ -897,7 +897,7 @@ body.presenter .pv{display:grid;position:fixed;inset:0;grid-template-columns:min
   <header><p class="kicker">Demo 1 &middot; steps 3&ndash;4 &middot; rehearsal</p><h2>It Added the Filter Itself</h2></header>
   <div class="body">
     <div class="shot" data-spots="9-10" style="width:1500px"><img src="img/03_filter_unprompted.jpg" data-h="610" alt="Claude's reply: median leverage by SIC division, noting it added a filter for empty segments and coreg that the prompt did not specify"></div>
-    <p class="caption">Good that it caught this without being told. It is also why you check.</p>
+    <p class="caption">Good that it caught this without being told. It is also why you check. <span class="muted">(First draft: the counts move slightly in later rounds, e.g. durables 571 in the final figure.)</span></p>
   </div>
 </section>
 
@@ -1188,10 +1188,12 @@ claude</pre>
 <section class="slide" data-section="Demo 2 + Lab 2a" data-sched="1:50-2:15" data-countdown="25" data-cdlabel="Lab 2a">
   <header><p class="kicker">Lab 2a</p><h2>Title vs. Trigger</h2></header>
   <div class="body">
-    <p class="label accent">Rarely fires (a title)</p>
-    <pre class="code bad" style="margin-bottom:46px">description: FSDS panel tool</pre>
+    <p class="label accent">Did not fire: a title (0 of 2 in rehearsal)</p>
+    <pre class="code bad">name: helper
+description: Helper tool.</pre>
+    <p class="small muted" style="margin:10px 0 40px">The folder name counts too: <code>fsds-panel</code> with <code>description: FSDS tool</code> still fired 2 of 3 times.</p>
     <div class="fragment" data-step="1">
-    <p class="label" style="color:var(--navy)">Fires (names what you would actually type)</p>
+    <p class="label" style="color:var(--navy)">Fired (names what you would actually type)</p>
     <pre class="code">description: Use when the user asks for a firm-year
   panel or a median ratio from SEC Financial Statement
   Data Sets (FSDS), names XBRL tags such as Assets, or
