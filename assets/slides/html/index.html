@@ -290,7 +290,7 @@ aside.notes{display:none}
 body.presenter{background:#14181E;overflow:hidden}
 body.presenter .stage{display:none}
 .pv{display:none}
-body.presenter .pv{display:grid;position:fixed;inset:0;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);grid-template-rows:56px minmax(0,1fr);gap:14px 22px;padding:12px 20px 18px;color:#E7EAF0;font-family:var(--sans)}
+body.presenter .pv{display:grid;position:fixed;inset:0;grid-template-columns:minmax(0,var(--pvcol,1.5fr)) minmax(0,1fr);grid-template-rows:56px minmax(0,1fr);gap:14px 22px;padding:12px 20px 18px;color:#E7EAF0;font-family:var(--sans)}
 .pv-top{grid-column:1/3;display:flex;align-items:center;gap:28px;font-size:20px;border-bottom:1px solid #2B3240;padding-bottom:8px;min-width:0}
 .pv-top .pv-clock{font-variant-numeric:tabular-nums;font-size:30px;font-weight:600}
 .pv-top .pv-timer{font-variant-numeric:tabular-nums;font-size:30px;color:#C8B48E;cursor:pointer;user-select:none}
@@ -299,10 +299,18 @@ body.presenter .pv{display:grid;position:fixed;inset:0;grid-template-columns:min
 .pv-top button{background:#232A36;color:#D9DEE8;border:1px solid #39424F;border-radius:4px;padding:4px 10px;font:14px var(--sans);cursor:pointer}
 .pv-main,.pv-side{display:flex;flex-direction:column;gap:10px;min-height:0;min-width:0}
 .pv-cur,.pv-next{position:relative;overflow:hidden;background:#000;border-radius:4px;aspect-ratio:16/9;width:100%;flex:none}
+#pvCur{width:var(--pvcur,100%)}
+.pv-main{position:relative}
+.pv-bar{display:flex;align-items:center;gap:8px;cursor:row-resize;user-select:none;border-top:2px solid #2B3240;padding-top:4px}
+.pv-bar:hover{border-top-color:#C8B48E}
+.pv-bar .grip{flex:1;text-align:center;color:#59637A;font-size:13px;letter-spacing:.1em}
+.pv-bar button{background:#232A36;color:#D9DEE8;border:1px solid #39424F;border-radius:4px;padding:1px 9px;font:13px var(--sans);cursor:pointer}
+.pv-vsplit{position:absolute;top:0;bottom:0;right:-17px;width:12px;cursor:col-resize;border-radius:4px}
+.pv-vsplit:hover,.pv-vsplit.on{background:#2B3240}
 .pv-label{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#7C8697;flex:none}
 .pv-frame{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
 .pv-frame .slide{opacity:1;visibility:visible;transform:none;transition:none}
-.pv-notes{flex:1;min-height:0;overflow:auto;background:#1B212B;border-radius:4px;padding:14px 20px;font-size:21px;line-height:1.5;color:#E7EAF0}
+.pv-notes{flex:1;min-height:0;overflow:auto;background:#1B212B;border-radius:4px;padding:14px 20px;font-size:var(--pvfs,21px);line-height:1.5;color:#E7EAF0}
 .pv-keys{font-size:14px;color:#7C8697;line-height:1.7;margin-top:auto}
 .pv-keys b{color:#B9C1CE;font-weight:600}
 .pv-notes p{margin:0 0 12px}
@@ -1024,7 +1032,7 @@ claude</pre>
         <p style="margin-top:20px">same paper trail,<br>same verify checklist</p>
       </div>
     </div>
-    <p class="caption">Pick the tier that fits your time and interests.</p>
+    <p class="caption">All three end with the same verify checklist and the same 10-K check.</p>
   </div>
 </section>
 
@@ -1512,13 +1520,14 @@ cd ~/referee_room &amp;&amp; claude</pre>
   </div>
   <div class="pv-main">
     <div class="pv-cur" id="pvCur"><div class="pv-frame"></div></div>
-    <div class="pv-label">Notes</div>
+    <div class="pv-label pv-bar" id="pvBar" title="Drag up or down to resize the slide and notes. Double-click to reset.">Notes<span class="grip">&#8645; drag to resize</span><button type="button" id="pvFsDn" title="Smaller notes text ([)">A&minus;</button><button type="button" id="pvFsUp" title="Larger notes text (])">A+</button><button type="button" id="pvReset" title="Reset layout">Reset</button></div>
     <div class="pv-notes" id="pvNotes"></div>
+    <div class="pv-vsplit" id="pvVsplit" title="Drag left or right to resize the columns. Double-click to reset."></div>
   </div>
   <div class="pv-side">
     <div class="pv-label" id="pvNextLabel">Next</div>
     <div class="pv-next" id="pvNext"><div class="pv-frame"></div></div>
-    <div class="pv-keys"><b>&rarr; / Space</b> next &middot; <b>&larr;</b> back &middot; <b>G</b> sections &middot; <b>number + Enter</b> jump &middot; <b>O</b> overview<br><b>T</b> countdown start/pause &middot; <b>Shift+T</b> clear &middot; <b>+ / &minus;</b> one minute &middot; <b>Z</b> zoom screenshot<br><b>B</b> black &middot; <b>R</b> reset timer &middot; <b>?</b> all keys</div>
+    <div class="pv-keys"><b>&rarr; / Space</b> next &middot; <b>&larr;</b> back &middot; <b>G</b> sections &middot; <b>number + Enter</b> jump &middot; <b>O</b> overview<br><b>T</b> countdown start/pause &middot; <b>Shift+T</b> clear &middot; <b>+ / &minus;</b> one minute &middot; <b>Z</b> zoom screenshot<br><b>B</b> black &middot; <b>R</b> reset timer &middot; <b>?</b> all keys<br><b>[ / ]</b> notes text &middot; <b>{ / }</b> slide size &middot; drag the Notes bar or the column edge</div>
   </div>
 </div>
 
@@ -2046,6 +2055,7 @@ cd ~/referee_room &amp;&amp; claude</pre>
       case 'g': case 'G': case 'm': case 'M': if (ovOpen) toggleOverview(false); toggleMenu(true); e.preventDefault(); break;
       case '?': case 'h': case 'H': toggleHelp(true); e.preventDefault(); break;
       case 'z': case 'Z': zoomCurrent(); break;
+      case '[': case ']': case '{': case '}': if (isPresenter && window.pvLayoutKey) { window.pvLayoutKey(k); e.preventDefault(); } break;
       case 't': if (instructor) cdToggle(); break;
       case 'T': if (instructor) { if (e.shiftKey) cdClear(); else cdToggle(); } break;
       case '+': case '=': if (instructor) cdAdjust(60000); break;
@@ -2079,6 +2089,46 @@ cd ~/referee_room &amp;&amp; claude</pre>
       var fr = b.querySelector('.pv-frame'); fr.style.transform = 'scale(' + (b.clientWidth / W) + ')';
     });
   }
+  // ---- adjustable presenter layout: slide size, notes text size, column split ----
+  var pvL = {cur: 100, fs: 21, col: 1.5}, pvRoot = document.getElementById('pv');
+  try { var sv = JSON.parse(localStorage.getItem('deck-pv-layout') || 'null'); if (sv) { pvL.cur = +sv.cur || 100; pvL.fs = +sv.fs || 21; pvL.col = +sv.col || 1.5; } } catch (er) {}
+  function pvApply(save){
+    pvL.cur = Math.max(20, Math.min(100, pvL.cur)); pvL.fs = Math.max(14, Math.min(40, pvL.fs)); pvL.col = Math.max(0.6, Math.min(4, pvL.col));
+    pvRoot.style.setProperty('--pvcur', pvL.cur + '%'); pvRoot.style.setProperty('--pvfs', pvL.fs + 'px'); pvRoot.style.setProperty('--pvcol', pvL.col + 'fr');
+    layoutPresenter();
+    if (save) { try { localStorage.setItem('deck-pv-layout', JSON.stringify(pvL)); } catch (er) {} }
+  }
+  function pvReset(){ pvL = {cur: 100, fs: 21, col: 1.5}; pvApply(true); }
+  pvApply(false);
+  document.getElementById('pvFsDn').addEventListener('click', function(e){ e.stopPropagation(); pvL.fs -= 2; pvApply(true); });
+  document.getElementById('pvFsUp').addEventListener('click', function(e){ e.stopPropagation(); pvL.fs += 2; pvApply(true); });
+  document.getElementById('pvReset').addEventListener('click', function(e){ e.stopPropagation(); pvReset(); });
+  (function(){
+    var bar = document.getElementById('pvBar'), vs = document.getElementById('pvVsplit'), main = pvCur.parentNode;
+    function drag(el, onMove){
+      el.addEventListener('pointerdown', function(e){
+        if (e.target.tagName === 'BUTTON') return;
+        e.preventDefault(); el.setPointerCapture(e.pointerId); el.classList.add('on');
+        function mv(ev){ onMove(ev); pvApply(false); }
+        function up(){ el.removeEventListener('pointermove', mv); el.removeEventListener('pointerup', up); el.classList.remove('on'); pvApply(true); }
+        el.addEventListener('pointermove', mv); el.addEventListener('pointerup', up);
+      });
+      el.addEventListener('dblclick', function(e){ if (e.target.tagName !== 'BUTTON') pvReset(); });
+    }
+    drag(bar, function(ev){
+      var r = main.getBoundingClientRect(), h = ev.clientY - r.top - 4;
+      pvL.cur = (h * 16 / 9) / r.width * 100;
+    });
+    drag(vs, function(ev){
+      var r = pvRoot.getBoundingClientRect(), x = (ev.clientX - r.left - 20) / (r.width - 62);
+      x = Math.max(0.3, Math.min(0.8, x)); pvL.col = x / (1 - x);
+    });
+  })();
+  window.pvLayoutKey = function(k){
+    if (k === '[') pvL.fs -= 2; else if (k === ']') pvL.fs += 2;
+    else if (k === '{') pvL.cur -= 5; else if (k === '}') pvL.cur += 5; else return false;
+    pvApply(true); return true;
+  };
   function renderPresenter(){
     setFrame(pvCur, cloneSlide(idx, frag));
     var ni, nf;
