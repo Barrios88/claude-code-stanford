@@ -197,4 +197,4 @@ Know the limit. The rule blocks Claude's file tools and shell commands that name
 
 ## Exit ticket
 
-At the end of class, fill in `exit_ticket.md` from the starter pack: one thing that broke today and how you found out, one thing you will verify next time, one research task you will delegate to an agent, and one you won't.
+At the end of class, fill in the [exit ticket](exit-ticket.qmd) on this site and email it from the page: one thing that broke today and how you found out, one thing you will verify next time, one research task you will delegate to an agent, and one you won't.

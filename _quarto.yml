@@ -29,6 +29,8 @@ website:
             href: lab1.qmd
           - text: "Lab 2: Skill and verification drills"
             href: lab2.qmd
+          - text: "Exit ticket"
+            href: exit-ticket.qmd
       - text: Readings
         href: readings.qmd
       - text: After Class

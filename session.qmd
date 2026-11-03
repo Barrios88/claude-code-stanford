@@ -52,7 +52,7 @@ Three short drills from `lab2_verification_drills.md`, all on your own project: 
 
 We discuss three questions, one each on learning, on verification and on the market for papers, using the two readings and your own experience from the labs. The discussion questions for each paper are on the [Readings page](readings.qmd).
 
-The exit ticket (`exit_ticket.md` in the starter pack) asks for four short answers:
+The [exit ticket](exit-ticket.qmd) is a short form on this site; you fill it in and email it from the page. It asks for four short answers:
 
 - one thing that broke today, and how you found out;
 - one thing you will verify next time before you trust a result;

@@ -1,0 +1,102 @@
+---
+title: "Exit Ticket"
+toc: false
+---
+
+Fill this in during the last five minutes of class. One or two sentences per question is enough. Be specific. When you're done, press **Email my answers** and send the message that opens. If no mail app opens, press **Copy my answers** and paste them into an email to <john.m.barrios@yale.edu>.
+
+Your answers are saved in this browser as you type, so you can close the tab and come back to them.
+
+```{=html}
+<form id="xt" class="xt" autocomplete="off">
+  <div class="xt-row">
+    <label>Name<input type="text" name="name"></label>
+    <label>Tier you ran in Lab 1
+      <select name="tier"><option value="">Choose one</option><option>Base</option><option>Standard</option><option>Stretch</option></select>
+    </label>
+  </div>
+
+  <label class="xt-q"><b>1. One thing that broke today, and how you found out.</b>
+    <span class="xt-hint">An install step, a tag, a join, a figure, a skill that didn't fire, a check that failed. Say what you saw that told you.</span>
+    <textarea name="q1" rows="4"></textarea></label>
+
+  <label class="xt-q"><b>2. One thing you will verify next time before you trust a similar result.</b>
+    <span class="xt-hint">Name the check and the source you would check against.</span>
+    <textarea name="q2" rows="4"></textarea></label>
+
+  <label class="xt-q"><b>3. One research task you will delegate to an agent from now on.</b>
+    <span class="xt-hint">Name a real task from your own work, not a category.</span>
+    <textarea name="q3" rows="4"></textarea></label>
+
+  <label class="xt-q"><b>4. One research task you will not delegate, and why.</b>
+    <textarea name="q4" rows="4"></textarea></label>
+
+  <label class="xt-q"><b>Optional: the one-sentence research question you brought. Did today change how you would build it?</b>
+    <textarea name="q5" rows="3"></textarea></label>
+
+  <div class="xt-actions">
+    <a class="btn" id="xt-mail" href="#">Email my answers</a>
+    <button type="button" class="btn btn-outline-secondary" id="xt-copy">Copy my answers</button>
+    <span id="xt-msg" class="xt-msg" role="status"></span>
+  </div>
+</form>
+
+<style>
+.xt{display:grid;gap:1.1rem;margin-top:1rem}
+.xt label{display:grid;gap:.3rem;font-weight:500}
+.xt-row{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:1rem}
+@media (max-width:600px){.xt-row{grid-template-columns:minmax(0,1fr)}}
+.xt input,.xt select,.xt textarea{font:inherit;font-weight:400;width:100%;padding:.5rem .65rem;border:1px solid #c9cfd8;border-radius:6px;background:#fff;color:inherit}
+.xt textarea{resize:vertical;min-height:5.5rem}
+.xt input:focus,.xt select:focus,.xt textarea:focus{outline:2px solid #286dc0;outline-offset:1px;border-color:#286dc0}
+.xt-hint{font-weight:400;font-size:.9rem;color:#6f665e}
+.xt-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:.25rem}
+.xt-msg{font-size:.9rem;color:#6f665e}
+</style>
+
+<script>
+(function () {
+  var form = document.getElementById("xt"), KEY = "stanford-exit-ticket";
+  var fields = ["name", "tier", "q1", "q2", "q3", "q4", "q5"];
+  var labels = {name: "Name", tier: "Tier", q1: "1. What broke, and how I found out",
+    q2: "2. What I will verify next time", q3: "3. A task I will delegate",
+    q4: "4. A task I won't delegate, and why", q5: "Optional: my research question"};
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY) || "{}");
+    fields.forEach(function (f) { if (saved[f]) form.elements[f].value = saved[f]; });
+  } catch (e) {}
+  form.addEventListener("input", function () {
+    var d = {}; fields.forEach(function (f) { d[f] = form.elements[f].value; });
+    try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {}
+  });
+  function text() {
+    return fields.map(function (f) {
+      return labels[f] + ":\n" + (form.elements[f].value.trim() || "(blank)");
+    }).join("\n\n");
+  }
+  function msg(s) { document.getElementById("xt-msg").textContent = s; }
+  document.getElementById("xt-mail").addEventListener("click", function (e) {
+    e.preventDefault();
+    var who = form.elements.name.value.trim();
+    var subject = "Exit ticket, Stanford Nov 3" + (who ? " (" + who + ")" : "");
+    location.href = "mailto:john.m.barrios@yale.edu?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(text());
+    msg("Your mail app should open with your answers. Press send there.");
+  });
+  document.getElementById("xt-copy").addEventListener("click", function () {
+    var t = text();
+    function fallback() {
+      var ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta);
+      ta.select(); var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta);
+      msg(ok ? "Copied. Paste into an email to john.m.barrios@yale.edu." : "Copy failed: select your answers and copy them by hand.");
+    }
+    try {
+      navigator.clipboard.writeText(t).then(function () {
+        msg("Copied. Paste into an email to john.m.barrios@yale.edu.");
+      }, fallback);
+    } catch (e) { fallback(); }
+  });
+})();
+</script>
+```
