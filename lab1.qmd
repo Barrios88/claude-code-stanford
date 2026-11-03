@@ -96,6 +96,46 @@ Work in this order. Each step catches a different kind of mistake before it reac
 
 7. **Work through the checklist** below.
 
+::: {.callout-note icon=false}
+## For your own projects: have Claude draft the six-part prompt
+
+Today you start from a filled-in template. On a new dataset, you won't have one, and the sentence you are most likely to leave out is the one about which rows are the right level (in FSDS, consolidated rows only). Have Claude draft the prompt before anything runs. Start Claude in the project folder, press **Shift+Tab** until it shows plan mode (it can read but not change anything), and paste:
+
+```text
+I want to build: [one sentence, e.g. "median book leverage by one-digit SIC
+for FY2023 10-K filers, from the SEC FSDS files in fsds/2024q1/"].
+
+Before writing any code, draft a six-part prompt for this task with these
+headings: DATA, JOIN, MEASURE, AGGREGATION, OUTPUT, PAPER TRAIL.
+
+To draft it:
+1. Read the files' documentation and look at a few rows of each file. Don't
+   compute anything yet.
+2. For each heading, state every choice that would change the numbers: which
+   rows to keep, which tags or variables, which period, units, duplicates and
+   amendments, and what counts as missing versus zero.
+3. List anything in the data that would silently double-count or mix units
+   if I didn't mention it (for example rows that repeat the same value at
+   segment level).
+4. Where a choice is mine to make, ask me rather than picking for me.
+
+Give me the draft prompt and your questions. Don't run it.
+```
+
+Answer its questions, edit the draft, then leave plan mode and send the final version as your real opening prompt. Step 3 does the work: on FSDS it is what surfaces the rows with a `segments` or `coreg` value that repeat the consolidated number. Stretch tier: you can use this now for your own question.
+
+When you write or check one yourself, answer one question per heading:
+
+| Heading | Question to answer |
+|---|---|
+| DATA | Which files and columns? Nothing downloaded or modified. |
+| JOIN | On what key? Row counts before and after, unmatched rows flagged. Which rows are the right level? |
+| MEASURE | Exact formula and variables, the period (`qtrs` = 0 for balance-sheet items, 4 for flows), restrictions, missing versus zero. |
+| AGGREGATION | Grouping, statistic, and the n behind each number. |
+| OUTPUT | File names, figure style, the table saved too. |
+| PAPER TRAIL | Named scripts, `DECISIONS.md`, `LOG.md`, attrition rows, and a `DATA_PROFILE.md` with a uniqueness test before any measure. |
+:::
+
 ::: {.callout-warning icon=false}
 ## Common failure: a clean-looking figure
 
